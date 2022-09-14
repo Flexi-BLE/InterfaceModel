@@ -1,716 +1,401 @@
 {
-	"definitions": {},
-	"$schema": "http://json-schema.org/draft-07/schema#", 
-	"$id": "https://example.com/object1661369711.json", 
-	"title": "Root", 
-	"type": "object",
-	"required": [
-		"id",
-		"schema_version",
-		"created_at",
-		"updated_at",
-		"tags",
-		"ble_registered_devices",
-		"things"
-	],
-	"properties": {
-		"id": {
-			"$id": "#root/id", 
-			"title": "Id", 
-			"type": "string",
-			"default": "",
-			"examples": [
-				"SAMPLE-JSON"
-			],
-			"pattern": "^.*$"
-		},
-		"schema_version": {
-			"$id": "#root/schema_version", 
-			"title": "Schema_version", 
-			"type": "string",
-			"default": "",
-			"examples": [
-				"1.0"
-			],
-			"pattern": "^.*$"
-		},
-		"created_at": {
-			"$id": "#root/created_at", 
-			"title": "Created_at", 
-			"type": "string",
-			"default": "",
-			"examples": [
-				"2022-04-13T22:11:39.000Z"
-			],
-			"pattern": "^.*$"
-		},
-		"updated_at": {
-			"$id": "#root/updated_at", 
-			"title": "Updated_at", 
-			"type": "string",
-			"default": "",
-			"examples": [
-				"2022-04-13T22:11:39.000Z"
-			],
-			"pattern": "^.*$"
-		},
-		"tags": {
-			"$id": "#root/tags", 
-			"title": "Tags", 
-			"type": "array",
-			"default": [],
-			"items":{
-				"$id": "#root/tags/items", 
-				"title": "Items", 
-				"type": "string",
-				"default": "",
-				"examples": [
-					"development"
-				],
-				"pattern": "^.*$"
-			}
-		},
-		"ble_registered_devices": {
-			"$id": "#root/ble_registered_devices", 
-			"title": "Ble_registered_devices", 
-			"type": "array",
-			"default": [],
-			"items":{
-				"$id": "#root/ble_registered_devices/items", 
-				"title": "Items", 
-				"type": "object",
-				"required": [
-					"name",
-					"services",
-					"description"
-				],
-				"properties": {
-					"name": {
-						"$id": "#root/ble_registered_devices/items/name", 
-						"title": "Name", 
-						"type": "string",
-						"default": "",
-						"examples": [
-							"Polar H10 821A5D29"
-						],
-						"pattern": "^.*$"
-					},
-					"services": {
-						"$id": "#root/ble_registered_devices/items/services", 
-						"title": "Services", 
-						"type": "array",
-						"default": [],
-						"items":{
-							"$id": "#root/ble_registered_devices/items/services/items", 
-							"title": "Items", 
-							"type": "string",
-							"default": "",
-							"examples": [
-								"heart-rate"
-							],
-							"pattern": "^.*$"
-						}
-					},
-					"description": {
-						"$id": "#root/ble_registered_devices/items/description", 
-						"title": "Description", 
-						"type": "string",
-						"default": "",
-						"examples": [
-							"a polar heart rate monitor for ground truth data collection"
-						],
-						"pattern": "^.*$"
-					}
-				}
-			}
-
-		},
-		"things": {
-			"$id": "#root/things", 
-			"title": "Things", 
-			"type": "array",
-			"default": [],
-			"items":{
-				"$id": "#root/things/items", 
-				"title": "Items", 
-				"type": "object",
-				"required": [
-					"name",
-					"description",
-					"tags",
-					"ble",
-					"global_config_values",
-					"data_streams"
-				],
-				"properties": {
-					"name": {
-						"$id": "#root/things/items/name", 
-						"title": "Name", 
-						"type": "string",
-						"default": "",
-						"examples": [
-							"my-ble-device"
-						],
-						"pattern": "^.*$"
-					},
-					"description": {
-						"$id": "#root/things/items/description", 
-						"title": "Description", 
-						"type": "string",
-						"default": "",
-						"examples": [
-							"This is an example description. It should breifly explain the functionality of the device. Testing 123..."
-						],
-						"pattern": "^.*$"
-					},
-					"tags": {
-						"$id": "#root/things/items/tags", 
-						"title": "Tags", 
-						"type": "array",
-						"default": [],
-						"items":{
-							"$id": "#root/things/items/tags/items", 
-							"title": "Items", 
-							"type": "string",
-							"default": "",
-							"examples": [
-								"research"
-							],
-							"pattern": "^.*$"
-						}
-					},
-					"ble": {
-						"$id": "#root/things/items/ble", 
-						"title": "Ble", 
-						"type": "object",
-						"required": [
-							"ble_registered_services",
-							"info_service_uuid",
-							"epoch_char_uuid"
-						],
-						"properties": {
-							"ble_registered_services": {
-								"$id": "#root/things/items/ble/ble_registered_services", 
-								"title": "Ble_registered_services", 
-								"type": "array",
-								"default": [],
-								"items":{
-									"$id": "#root/things/items/ble/ble_registered_services/items", 
-									"title": "Items", 
-									"type": "string",
-									"default": "",
-									"examples": [
-										"battery"
-									],
-									"pattern": "^.*$"
-								}
-							},
-							"info_service_uuid": {
-								"$id": "#root/things/items/ble/info_service_uuid", 
-								"title": "Info_service_uuid", 
-								"type": "string",
-								"default": "",
-								"examples": [
-									"1a220001-c2ed-4d11-ad1e-fc06d8a02d37"
-								],
-								"pattern": "^.*$"
-							},
-							"epoch_char_uuid": {
-								"$id": "#root/things/items/ble/epoch_char_uuid", 
-								"title": "Epoch_char_uuid", 
-								"type": "string",
-								"default": "",
-								"examples": [
-									"1a220002-c2ed-4d11-ad1e-fc06d8a02d37"
-								],
-								"pattern": "^.*$"
-							}
-						}
-					}
-,
-					"global_config_values": {
-						"$id": "#root/things/items/global_config_values", 
-						"title": "Global_config_values", 
-						"type": "array",
-						"default": []
-					},
-					"data_streams": {
-						"$id": "#root/things/items/data_streams", 
-						"title": "Data_streams", 
-						"type": "array",
-						"default": [],
-						"items":{
-							"$id": "#root/things/items/data_streams/items", 
-							"title": "Items", 
-							"type": "object",
-							"required": [
-								"id",
-								"name",
-								"description",
-								"include_anchor_timestamp",
-								"offset_data_value",
-								"config_values",
-								"data_values",
-								"ble"
-							],
-							"properties": {
-								"id": {
-									"$id": "#root/things/items/data_streams/items/id", 
-									"title": "Id", 
-									"type": "string",
-									"default": "",
-									"examples": [
-										"0xb92c"
-									],
-									"pattern": "^.*$"
-								},
-								"name": {
-									"$id": "#root/things/items/data_streams/items/name", 
-									"title": "Name", 
-									"type": "string",
-									"default": "",
-									"examples": [
-										"accelerometry"
-									],
-									"pattern": "^.*$"
-								},
-								"description": {
-									"$id": "#root/things/items/data_streams/items/description", 
-									"title": "Description", 
-									"type": "string",
-									"default": "",
-									"examples": [
-										"Accelerometry data"
-									],
-									"pattern": "^.*$"
-								},
-								"include_anchor_timestamp": {
-									"$id": "#root/things/items/data_streams/items/include_anchor_timestamp", 
-									"title": "Include_anchor_timestamp", 
-									"type": "boolean",
-									"examples": [
-										true
-									],
-									"default": true
-								},
-								"offset_data_value": {
-									"$id": "#root/things/items/data_streams/items/offset_data_value", 
-									"title": "Offset_data_value", 
-									"type": "object",
-									"required": [
-										"name",
-										"description",
-										"unit",
-										"byte_start",
-										"byte_end",
-										"size",
-										"type",
-										"multiplier",
-										"query_type"
-									],
-									"properties": {
-										"name": {
-											"$id": "#root/things/items/data_streams/items/offset_data_value/name", 
-											"title": "Name", 
-											"type": "string",
-											"default": "",
-											"examples": [
-												"ms_offset"
-											],
-											"pattern": "^.*$"
-										},
-										"description": {
-											"$id": "#root/things/items/data_streams/items/offset_data_value/description", 
-											"title": "Description", 
-											"type": "string",
-											"default": "",
-											"examples": [
-												"relative time since the previous reading"
-											],
-											"pattern": "^.*$"
-										},
-										"unit": {
-											"$id": "#root/things/items/data_streams/items/offset_data_value/unit", 
-											"title": "Unit", 
-											"type": "string",
-											"default": "",
-											"examples": [
-												"ms"
-											],
-											"pattern": "^.*$"
-										},
-										"byte_start": {
-											"$id": "#root/things/items/data_streams/items/offset_data_value/byte_start", 
-											"title": "Byte_start", 
-											"type": "integer",
-											"examples": [
-												12
-											],
-											"default": 0
-										},
-										"byte_end": {
-											"$id": "#root/things/items/data_streams/items/offset_data_value/byte_end", 
-											"title": "Byte_end", 
-											"type": "integer",
-											"examples": [
-												13
-											],
-											"default": 0
-										},
-										"size": {
-											"$id": "#root/things/items/data_streams/items/offset_data_value/size", 
-											"title": "Size", 
-											"type": "integer",
-											"examples": [
-												1
-											],
-											"default": 0
-										},
-										"type": {
-											"$id": "#root/things/items/data_streams/items/offset_data_value/type", 
-											"title": "Type", 
-											"type": "string",
-											"default": "",
-											"examples": [
-												"uint"
-											],
-											"pattern": "^.*$"
-										},
-										"multiplier": {
-											"$id": "#root/things/items/data_streams/items/offset_data_value/multiplier", 
-											"title": "Multiplier", 
-											"type": "null",
-											"default": null
-										},
-										"query_type": {
-											"$id": "#root/things/items/data_streams/items/offset_data_value/query_type", 
-											"title": "Query_type", 
-											"type": "string",
-											"default": "",
-											"examples": [
-												"none"
-											],
-											"pattern": "^.*$"
-										}
-									}
-								}
-,
-								"config_values": {
-									"$id": "#root/things/items/data_streams/items/config_values", 
-									"title": "Config_values", 
-									"type": "array",
-									"default": [],
-									"items":{
-										"$id": "#root/things/items/data_streams/items/config_values/items", 
-										"title": "Items", 
-										"type": "object",
-										"required": [
-											"name",
-											"description",
-											"byte_start",
-											"byte_end",
-											"size",
-											"unit",
-											"type",
-											"default_value",
-											"options",
-											"range"
-										],
-										"properties": {
-											"name": {
-												"$id": "#root/things/items/data_streams/items/config_values/items/name", 
-												"title": "Name", 
-												"type": "string",
-												"default": "",
-												"examples": [
-													"sensor_state"
-												],
-												"pattern": "^.*$"
-											},
-											"description": {
-												"$id": "#root/things/items/data_streams/items/config_values/items/description", 
-												"title": "Description", 
-												"type": "string",
-												"default": "",
-												"examples": [
-													"state of the accelerometer sensor"
-												],
-												"pattern": "^.*$"
-											},
-											"byte_start": {
-												"$id": "#root/things/items/data_streams/items/config_values/items/byte_start", 
-												"title": "Byte_start", 
-												"type": "integer",
-												"examples": [
-													0
-												],
-												"default": 0
-											},
-											"byte_end": {
-												"$id": "#root/things/items/data_streams/items/config_values/items/byte_end", 
-												"title": "Byte_end", 
-												"type": "integer",
-												"examples": [
-													1
-												],
-												"default": 0
-											},
-											"size": {
-												"$id": "#root/things/items/data_streams/items/config_values/items/size", 
-												"title": "Size", 
-												"type": "integer",
-												"examples": [
-													1
-												],
-												"default": 0
-											},
-											"unit": {
-												"$id": "#root/things/items/data_streams/items/config_values/items/unit", 
-												"title": "Unit", 
-												"type": "null",
-												"default": null
-											},
-											"type": {
-												"$id": "#root/things/items/data_streams/items/config_values/items/type", 
-												"title": "Type", 
-												"type": "string",
-												"default": "",
-												"examples": [
-													"uint"
-												],
-												"pattern": "^.*$"
-											},
-											"default_value": {
-												"$id": "#root/things/items/data_streams/items/config_values/items/default_value", 
-												"title": "Default_value", 
-												"type": "string",
-												"default": "",
-												"examples": [
-													"0"
-												],
-												"pattern": "^.*$"
-											},
-											"options": {
-												"$id": "#root/things/items/data_streams/items/config_values/items/options", 
-												"title": "Options", 
-												"type": "array",
-												"default": [],
-												"items":{
-													"$id": "#root/things/items/data_streams/items/config_values/items/options/items", 
-													"title": "Items", 
-													"type": "object",
-													"required": [
-														"name",
-														"description",
-														"value"
-													],
-													"properties": {
-														"name": {
-															"$id": "#root/things/items/data_streams/items/config_values/items/options/items/name", 
-															"title": "Name", 
-															"type": "string",
-															"default": "",
-															"examples": [
-																"disabled"
-															],
-															"pattern": "^.*$"
-														},
-														"description": {
-															"$id": "#root/things/items/data_streams/items/config_values/items/options/items/description", 
-															"title": "Description", 
-															"type": "string",
-															"default": "",
-															"examples": [
-																"the sensor will not stream data"
-															],
-															"pattern": "^.*$"
-														},
-														"value": {
-															"$id": "#root/things/items/data_streams/items/config_values/items/options/items/value", 
-															"title": "Value", 
-															"type": "string",
-															"default": "",
-															"examples": [
-																"0"
-															],
-															"pattern": "^.*$"
-														}
-													}
-												}
-
-											},
-											"range": {
-												"$id": "#root/things/items/data_streams/items/config_values/items/range", 
-												"title": "Range", 
-												"type": "null",
-												"default": null
-											}
-										}
-									}
-
-								},
-								"data_values": {
-									"$id": "#root/things/items/data_streams/items/data_values", 
-									"title": "Data_values", 
-									"type": "array",
-									"default": [],
-									"items":{
-										"$id": "#root/things/items/data_streams/items/data_values/items", 
-										"title": "Items", 
-										"type": "object",
-										"required": [
-											"name",
-											"description",
-											"unit",
-											"byte_start",
-											"byte_end",
-											"size",
-											"type",
-											"multiplier",
-											"query_type"
-										],
-										"properties": {
-											"name": {
-												"$id": "#root/things/items/data_streams/items/data_values/items/name", 
-												"title": "Name", 
-												"type": "string",
-												"default": "",
-												"examples": [
-													"accel_x"
-												],
-												"pattern": "^.*$"
-											},
-											"description": {
-												"$id": "#root/things/items/data_streams/items/data_values/items/description", 
-												"title": "Description", 
-												"type": "string",
-												"default": "",
-												"examples": [
-													"x-axis value"
-												],
-												"pattern": "^.*$"
-											},
-											"unit": {
-												"$id": "#root/things/items/data_streams/items/data_values/items/unit", 
-												"title": "Unit", 
-												"type": "string",
-												"default": "",
-												"examples": [
-													""
-												],
-												"pattern": "^.*$"
-											},
-											"byte_start": {
-												"$id": "#root/things/items/data_streams/items/data_values/items/byte_start", 
-												"title": "Byte_start", 
-												"type": "integer",
-												"examples": [
-													0
-												],
-												"default": 0
-											},
-											"byte_end": {
-												"$id": "#root/things/items/data_streams/items/data_values/items/byte_end", 
-												"title": "Byte_end", 
-												"type": "integer",
-												"examples": [
-													4
-												],
-												"default": 0
-											},
-											"size": {
-												"$id": "#root/things/items/data_streams/items/data_values/items/size", 
-												"title": "Size", 
-												"type": "integer",
-												"examples": [
-													4
-												],
-												"default": 0
-											},
-											"type": {
-												"$id": "#root/things/items/data_streams/items/data_values/items/type", 
-												"title": "Type", 
-												"type": "string",
-												"default": "",
-												"examples": [
-													"int"
-												],
-												"pattern": "^.*$"
-											},
-											"multiplier": {
-												"$id": "#root/things/items/data_streams/items/data_values/items/multiplier", 
-												"title": "Multiplier", 
-												"type": "number",
-												"examples": [
-													0.000001
-												],
-												"default": 0.0
-											},
-											"query_type": {
-												"$id": "#root/things/items/data_streams/items/data_values/items/query_type", 
-												"title": "Query_type", 
-												"type": "string",
-												"default": "",
-												"examples": [
-													"value"
-												],
-												"pattern": "^.*$"
-											}
-										}
-									}
-
-								},
-								"ble": {
-									"$id": "#root/things/items/data_streams/items/ble", 
-									"title": "Ble", 
-									"type": "object",
-									"required": [
-										"service_uuid",
-										"data_char_uuid",
-										"config_char_uuid"
-									],
-									"properties": {
-										"service_uuid": {
-											"$id": "#root/things/items/data_streams/items/ble/service_uuid", 
-											"title": "Service_uuid", 
-											"type": "string",
-											"default": "",
-											"examples": [
-												"1a220003-c2ed-4d11-ad1e-fc06d8a02d37"
-											],
-											"pattern": "^.*$"
-										},
-										"data_char_uuid": {
-											"$id": "#root/things/items/data_streams/items/ble/data_char_uuid", 
-											"title": "Data_char_uuid", 
-											"type": "string",
-											"default": "",
-											"examples": [
-												"1a220005-c2ed-4d11-ad1e-fc06d8a02d37"
-											],
-											"pattern": "^.*$"
-										},
-										"config_char_uuid": {
-											"$id": "#root/things/items/data_streams/items/ble/config_char_uuid", 
-											"title": "Config_char_uuid", 
-											"type": "string",
-											"default": "",
-											"examples": [
-												"1a220004-c2ed-4d11-ad1e-fc06d8a02d37"
-											],
-											"pattern": "^.*$"
-										}
-									}
-								}
-
-							}
-						}
-
-					}
-				}
-			}
-
-		}
-	}
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$ref": "#/definitions/Welcome4",
+    "definitions": {
+        "Welcome4": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "schema_version": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "updated_at": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "ble_registered_devices": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BleRegisteredDevice"
+                    }
+                },
+                "devices": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Device"
+                    }
+                }
+            },
+            "required": [
+                "ble_registered_devices",
+                "created_at",
+                "devices",
+                "id",
+                "schema_version",
+                "tags",
+                "updated_at"
+            ],
+            "title": "Welcome4"
+        },
+        "BleRegisteredDevice": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "services": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "description",
+                "name",
+                "services"
+            ],
+            "title": "BleRegisteredDevice"
+        },
+        "Device": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "ble": {
+                    "$ref": "#/definitions/DeviceBle"
+                },
+                "global_config_values": {
+                    "type": "array",
+                    "items": {}
+                },
+                "data_streams": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/DataStream"
+                    }
+                }
+            },
+            "required": [
+                "ble",
+                "data_streams",
+                "description",
+                "global_config_values",
+                "name",
+                "tags"
+            ],
+            "title": "Device"
+        },
+        "DeviceBle": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "ble_registered_services": {
+                    "type": "array",
+                    "items": {}
+                },
+                "info_service_uuid": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "epoch_char_uuid": {
+                    "type": "string",
+                    "format": "uuid"
+                }
+            },
+            "required": [
+                "ble_registered_services",
+                "epoch_char_uuid",
+                "info_service_uuid"
+            ],
+            "title": "DeviceBle"
+        },
+        "DataStream": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "include_anchor_timestamp": {
+                    "type": "boolean"
+                },
+                "offset_data_value": {
+                    "$ref": "#/definitions/DataValue"
+                },
+                "config_values": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ConfigValue"
+                    }
+                },
+                "data_values": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/DataValue"
+                    }
+                },
+                "ble": {
+                    "$ref": "#/definitions/DataStreamBle"
+                }
+            },
+            "required": [
+                "ble",
+                "config_values",
+                "data_values",
+                "description",
+                "id",
+                "include_anchor_timestamp",
+                "name",
+                "offset_data_value"
+            ],
+            "title": "DataStream"
+        },
+        "DataStreamBle": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "service_uuid": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "data_char_uuid": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "config_char_uuid": {
+                    "type": "string",
+                    "format": "uuid"
+                }
+            },
+            "required": [
+                "config_char_uuid",
+                "data_char_uuid",
+                "service_uuid"
+            ],
+            "title": "DataStreamBle"
+        },
+        "ConfigValue": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "byte_start": {
+                    "type": "integer"
+                },
+                "byte_end": {
+                    "type": "integer"
+                },
+                "size": {
+                    "type": "integer"
+                },
+                "unit": {
+                    "anyOf": [
+                        {
+                            "type": "null"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                },
+                "type": {
+                    "$ref": "#/definitions/Type"
+                },
+                "default_value": {
+                    "type": "string",
+                    "format": "integer"
+                },
+                "options": {
+                    "anyOf": [
+                        {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Option"
+                            }
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "range": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/Range"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "byte_end",
+                "byte_start",
+                "default_value",
+                "description",
+                "name",
+                "options",
+                "range",
+                "size",
+                "type",
+                "unit"
+            ],
+            "title": "ConfigValue"
+        },
+        "Option": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string",
+                    "format": "integer"
+                }
+            },
+            "required": [
+                "description",
+                "name",
+                "value"
+            ],
+            "title": "Option"
+        },
+        "Range": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "start": {
+                    "type": "integer"
+                },
+                "end": {
+                    "type": "integer"
+                },
+                "step": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "end",
+                "start",
+                "step"
+            ],
+            "title": "Range"
+        },
+        "DataValue": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "unit": {
+                    "$ref": "#/definitions/Unit"
+                },
+                "byte_start": {
+                    "type": "integer"
+                },
+                "byte_end": {
+                    "type": "integer"
+                },
+                "size": {
+                    "type": "integer"
+                },
+                "type": {
+                    "$ref": "#/definitions/Type"
+                },
+                "multiplier": {
+                    "anyOf": [
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "variable_type": {
+                    "type": "string"
+                },
+                "depends_on": {
+                    "type": "null"
+                }
+            },
+            "required": [
+                "byte_end",
+                "byte_start",
+                "description",
+                "multiplier",
+                "name",
+                "size",
+                "type",
+                "unit"
+            ],
+            "title": "DataValue"
+        },
+        "Type": {
+            "type": "string",
+            "enum": [
+                "int",
+                "uint"
+            ],
+            "title": "Type"
+        },
+        "Unit": {
+            "type": "string",
+            "enum": [
+                "",
+                "arb",
+                "ms"
+            ],
+            "title": "Unit"
+        }
+    }
 }
-
