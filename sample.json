@@ -1,46 +1,39 @@
 {
-    "id": "flexiBLE-sample-spec",
-    "schema_version": "0.3",
-    "created_at": "2022-09-14T00:00:00.000Z",
-    "updated_at": "2022-09-14T00:00:00.000Z",
+    "id": "arduino-example-spec",
+    "schema_version": "0.3.5",
+    "created_at": "2022-10-18T00:00:00.000Z",
+    "updated_at": "2022-10-18T22:00:00.000Z",
     "tags": [
         "development"
     ],
-    "ble_registered_devices": [
-        {
-            "name": "Polar H10 821A5D29",
-            "services": [
-                "heart-rate",
-                "battery"
-            ],
-            "description": "a polar heart rate monitor for ground truth data collection"
-        }
-    ],
+    "ble_registered_devices": [],
     "devices": [
         {
-            "name": "FlexiBLE-pre-alpha",
-            "description": "a locally stored file for nrf5340 device config",
+            "name": "flexible-example",
+            "description": "An example device",
             "tags": [
                 "research"
             ],
             "ble": {
                 "ble_registered_services": [],
                 "info_service_uuid": "1a220001-c2ed-4d11-ad1e-fc06d8a02d37",
-                "epoch_char_uuid": "1a220002-c2ed-4d11-ad1e-fc06d8a02d37"
+                "epoch_char_uuid": "1a220002-c2ed-4d11-ad1e-fc06d8a02d37",
+				"spec_version_char_uuid": "1a220003-c2ed-4d11-ad1e-fc06d8a02d37",
+				"spec_id_char_uuid": "1a220004-c2ed-4d11-ad1e-fc06d8a02d37"
             },
             "global_config_values": [],
             "data_streams": [
                 {
                     "id": "0xb92c",
-                    "name": "accelerometry",
-                    "description": "Accelerometer sensor (x, y, z axis)",
+                    "name": "random number",
+                    "description": "Just a stream of random numbers",
                     "include_anchor_timestamp": true,
                     "offset_data_value": {
                         "name": "ms_offset",
                         "description": "relative time since the previous reading",
                         "unit": "ms",
-                        "byte_start": 12,
-                        "byte_end": 13,
+                        "byte_start": 2,
+                        "byte_end": 3,
                         "size": 1,
                         "type": "uint",
                         "multiplier": null,
@@ -54,7 +47,8 @@
                             "byte_end": 1,
                             "size": 1,
                             "unit": null,
-                            "type": "uint",
+                            "data_type": "uint",
+                            "selection_type": "single",
                             "default_value": "0",
                             "options": [
                                 {
@@ -76,10 +70,11 @@
                             "byte_start": 1,
                             "byte_end": 3,
                             "size": 2,
-                            "type": "uint",
+                            "data_type": "uint",
+                            "selection_type": "range",
                             "unit": "Hz",
                             "options": null,
-                            "default_value": "10",
+                            "default_value": "50",
                             "range": {
                                 "start": 20,
                                 "end": 500,
@@ -87,249 +82,87 @@
                             }
                         },
                         {
-                            "name": "batch_size",
-                            "description": "the maximun size of payload",
+                            "name": "multiselect_example",
+                            "description": "a dummy parameter for multiselection",
                             "byte_start": 3,
                             "byte_end": 4,
                             "size": 1,
-                            "type": "uint",
-                            "unit": "bytes",
-                            "options": null,
-                            "default_value": "240",
-                            "range": {
-                                "start": 0,
-                                "end": 240,
-                                "step": 10
-                            }
+                            "data_type": "uint",
+                            "selection_type": "bit-encoded-multi",
+                            "unit": "Hz",
+                            "options": [
+                                {
+                                    "name": "option1",
+                                    "description": "option1",
+                                    "value": "1"
+                                },
+                                {
+                                    "name": "option2",
+                                    "description": "option2",
+                                    "value": "2"
+                                },
+                                {
+                                    "name": "option3",
+                                    "description": "option3",
+                                    "value": "4"
+                                },
+                                {
+                                    "name": "option4",
+                                    "description": "option3",
+                                    "value": "8"
+                                },
+                                {
+                                    "name": "option5",
+                                    "description": "option3",
+                                    "value": "16"
+                                },
+                                {
+                                    "name": "option6",
+                                    "description": "option3",
+                                    "value": "32"
+                                }
+                            ],
+                            "default_value": "8",
+                            "range": null
                         }
                     ],
                     "data_values": [
                         {
-                            "name": "accel_x",
-                            "description": "x-axis value",
-                            "unit": "",
-                            "byte_start": 0,
-                            "byte_end": 4,
-                            "size": 4,
-                            "type": "int",
-                            "multiplier": 0.000001,
-                            "variable_type": "value",
-                            "depends_on": null
-                        },
-                        {
-                            "name": "accel_y",
-                            "description": "y-axis value",
-                            "unit": "",
-                            "byte_start": 4,
-                            "byte_end": 8,
-                            "size": 4,
-                            "type": "int",
-                            "multiplier": 0.000001,
-                            "variable_type": "value",
-                            "depends_on": null
-                        },
-                        {
-                            "name": "accel_z",
-                            "description": "z-axis value",
-                            "unit": "",
-                            "byte_start": 8,
-                            "byte_end": 12,
-                            "size": 4,
-                            "type": "int",
-                            "multiplier": 0.000001,
-                            "variable_type": "value",
-                            "depends_on": null
-                        }
-                    ],
-                    "ble": {
-                        "service_uuid": "1a220003-c2ed-4d11-ad1e-fc06d8a02d37",
-                        "data_char_uuid": "1a220005-c2ed-4d11-ad1e-fc06d8a02d37",
-                        "config_char_uuid": "1a220004-c2ed-4d11-ad1e-fc06d8a02d37"
-                    }
-                },
-                {
-                    "id": "0xb94d",
-                    "name": "random-number",
-                    "description": "random number data stream to simulate a sensor, used for throughput testing",
-                    "include_anchor_timestamp": true,
-                    "offset_data_value": {
-                        "name": "ms_offset",
-                        "description": "relative time since the previous reading",
-                        "unit": "ms",
-                        "byte_start": 20,
-                        "byte_end": 21,
-                        "size": 1,
-                        "type": "uint",
-                        "multiplier": null,
-                        "variable_type": "none"
-                    },
-                    "config_values": [
-                        {
-                            "name": "sensor_state",
-                            "description": "state of the accelerometer sensor",
+                            "name": "val",
+                            "description": "random number between",
+                            "unit": "arb",
                             "byte_start": 0,
                             "byte_end": 1,
                             "size": 1,
-                            "unit": null,
                             "type": "uint",
-                            "default_value": "0",
-                            "options": [
-                                {
-                                    "name": "disabled",
-                                    "description": "the sensor will not stream data",
-                                    "value": "0"
-                                },
-                                {
-                                    "name": "streaming",
-                                    "description": "the sensor will stream data",
-                                    "value": "1"
-                                }
-                            ],
-                            "range": null
+                            "multiplier": null,
+                            "variable_type": "value",
+                            "depends_on": [
+                                "group"
+                            ]
                         },
                         {
-                            "name": "desired_frequency",
-                            "description": "the desired frequency of the sensor",
+                            "name": "group",
+                            "description": "a group to a value",
+                            "unit": "",
                             "byte_start": 1,
-                            "byte_end": 3,
-                            "size": 2,
-                            "type": "uint",
-                            "unit": "Hz",
-                            "options": null,
-                            "default_value":  "100",
-                            "range": {
-                                "start": 0,
-                                "end": 1000,
-                                "step": 50
-                            }
-                        }
-                    ],
-                    "data_values": [
-                        {
-                            "name": "value1",
-                            "description": "random value #1",
-                            "unit": "arb",
-                            "byte_start": 0,
                             "byte_end": 2,
-                            "size": 2,
+                            "size": 1,
                             "type": "uint",
                             "multiplier": null,
-                            "variable_type": "value",
-                            "depends_on": null
-                        },
-                        {
-                            "name": "value2",
-                            "description": "random value #2",
-                            "unit": "arb",
-                            "byte_start": 2,
-                            "byte_end": 4,
-                            "size": 2,
-                            "type": "uint",
-                            "multiplier": null,
-                            "variable_type": "value",
-                            "depends_on": null
-                        },
-                        {
-                            "name": "value3",
-                            "description": "random value #3",
-                            "unit": "arb",
-                            "byte_start": 4,
-                            "byte_end": 6,
-                            "size": 2,
-                            "type": "uint",
-                            "multiplier": null,
-                            "variable_type": "value",
-                            "depends_on": null
-                        },
-                        {
-                            "name": "value4",
-                            "description": "random value #4",
-                            "unit": "arb",
-                            "byte_start": 6,
-                            "byte_end": 8,
-                            "size": 2,
-                            "type": "uint",
-                            "multiplier": null,
-                            "variable_type": "value",
-                            "depends_on": null
-                        },
-                        {
-                            "name": "value5",
-                            "description": "random value #5",
-                            "unit": "arb",
-                            "byte_start": 8,
-                            "byte_end": 10,
-                            "size": 2,
-                            "type": "uint",
-                            "multiplier": null,
-                            "variable_type": "value",
-                            "depends_on": null
-                        },
-                        {
-                            "name": "value6",
-                            "description": "random value #6",
-                            "unit": "arb",
-                            "byte_start": 10,
-                            "byte_end": 12,
-                            "size": 2,
-                            "type": "uint",
-                            "multiplier": null,
-                            "variable_type": "value",
-                            "depends_on": null
-                        },
-                        {
-                            "name": "value7",
-                            "description": "random value #7",
-                            "unit": "arb",
-                            "byte_start": 12,
-                            "byte_end": 14,
-                            "size": 2,
-                            "type": "uint",
-                            "multiplier": null,
-                            "variable_type": "value",
-                            "depends_on": null
-                        },
-                        {
-                            "name": "value8",
-                            "description": "random value #8",
-                            "unit": "arb",
-                            "byte_start": 14,
-                            "byte_end": 16,
-                            "size": 2,
-                            "type": "uint",
-                            "multiplier": null,
-                            "variable_type": "value",
-                            "depends_on": null
-                        },
-                        {
-                            "name": "value9",
-                            "description": "random value #9",
-                            "unit": "arb",
-                            "byte_start": 16,
-                            "byte_end": 18,
-                            "size": 2,
-                            "type": "uint",
-                            "multiplier": null,
-                            "variable_type": "value",
-                            "depends_on": null
-                        },
-                        {
-                            "name": "value10",
-                            "description": "random value #10",
-                            "unit": "arb",
-                            "byte_start": 18,
-                            "byte_end": 20,
-                            "size": 2,
-                            "type": "uint",
-                            "multiplier": null,
-                            "variable_type": "value",
-                            "depends_on": null
+                            "variable_type": "tag",
+                            "depends_on": null,
+                            "value_options": [
+                                "1",
+                                "2",
+                                "3"
+                            ]
                         }
                     ],
                     "ble": {
-                        "service_uuid": "1a220020-c2ed-4d11-ad1e-fc06d8a02d37",
-                        "data_char_uuid": "1a220022-c2ed-4d11-ad1e-fc06d8a02d37",
-                        "config_char_uuid": "1a220021-c2ed-4d11-ad1e-fc06d8a02d37"
+                        "service_uuid": "1a230001-c2ed-4d11-ad1e-fc06d8a02d37",
+                        "data_char_uuid": "1a230002-c2ed-4d11-ad1e-fc06d8a02d37",
+                        "config_char_uuid": "1a230003-c2ed-4d11-ad1e-fc06d8a02d37"
                     }
                 }
             ]

@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/draft-06/schema#",
-    "$ref": "#/definitions/Welcome4",
+    "$ref": "#/definitions/Welcome2",
     "definitions": {
-        "Welcome4": {
+        "Welcome2": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -28,9 +28,7 @@
                 },
                 "ble_registered_devices": {
                     "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/BleRegisteredDevice"
-                    }
+                    "items": {}
                 },
                 "devices": {
                     "type": "array",
@@ -48,31 +46,7 @@
                 "tags",
                 "updated_at"
             ],
-            "title": "Welcome4"
-        },
-        "BleRegisteredDevice": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "services": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "description": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "description",
-                "name",
-                "services"
-            ],
-            "title": "BleRegisteredDevice"
+            "title": "Welcome2"
         },
         "Device": {
             "type": "object",
@@ -129,12 +103,22 @@
                 "epoch_char_uuid": {
                     "type": "string",
                     "format": "uuid"
+                },
+                "spec_version_char_uuid": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "spec_id_char_uuid": {
+                    "type": "string",
+                    "format": "uuid"
                 }
             },
             "required": [
                 "ble_registered_services",
                 "epoch_char_uuid",
-                "info_service_uuid"
+                "info_service_uuid",
+                "spec_id_char_uuid",
+                "spec_version_char_uuid"
             ],
             "title": "DeviceBle"
         },
@@ -238,8 +222,11 @@
                         }
                     ]
                 },
-                "type": {
-                    "$ref": "#/definitions/Type"
+                "data_type": {
+                    "type": "string"
+                },
+                "selection_type": {
+                    "type": "string"
                 },
                 "default_value": {
                     "type": "string",
@@ -272,13 +259,14 @@
             "required": [
                 "byte_end",
                 "byte_start",
+                "data_type",
                 "default_value",
                 "description",
                 "name",
                 "options",
                 "range",
+                "selection_type",
                 "size",
-                "type",
                 "unit"
             ],
             "title": "ConfigValue"
@@ -337,7 +325,7 @@
                     "type": "string"
                 },
                 "unit": {
-                    "$ref": "#/definitions/Unit"
+                    "type": "string"
                 },
                 "byte_start": {
                     "type": "integer"
@@ -349,23 +337,33 @@
                     "type": "integer"
                 },
                 "type": {
-                    "$ref": "#/definitions/Type"
+                    "type": "string"
                 },
                 "multiplier": {
+                    "type": "null"
+                },
+                "variable_type": {
+                    "type": "string"
+                },
+                "depends_on": {
                     "anyOf": [
                         {
-                            "type": "number"
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
                         },
                         {
                             "type": "null"
                         }
                     ]
                 },
-                "variable_type": {
-                    "type": "string"
-                },
-                "depends_on": {
-                    "type": "null"
+                "value_options": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "integer"
+                    }
                 }
             },
             "required": [
@@ -376,26 +374,10 @@
                 "name",
                 "size",
                 "type",
-                "unit"
+                "unit",
+                "variable_type"
             ],
             "title": "DataValue"
-        },
-        "Type": {
-            "type": "string",
-            "enum": [
-                "int",
-                "uint"
-            ],
-            "title": "Type"
-        },
-        "Unit": {
-            "type": "string",
-            "enum": [
-                "",
-                "arb",
-                "ms"
-            ],
-            "title": "Unit"
         }
     }
 }
