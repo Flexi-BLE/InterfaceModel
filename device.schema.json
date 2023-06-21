@@ -1,0 +1,369 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema",
+    "$ref": "#/definitions/FlexiBLEDevice",
+    "definitions": {
+        "FlexiBLEDevice": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "title": "FlexiBLE Device Name",
+                    "description": "A user friendly name for the FlexiBLE device",
+                    "examples": ["ExampleSensor"],
+                    "type": "string"
+                },
+                "description": {
+                    "title": "FlexiBLE Device Description",
+                    "description": "A user friendly description for the FlexiBLE device",
+                    "examples": ["ExampleSensor is a sensor that does something"],
+                    "type": "string"
+                },
+                "flexible_version": {
+                    "const": "0.4.0",
+                    "default": "0.4.0",
+                    "type": "string",
+                    "readOnly": true
+                },
+                "ble": {
+                    "title": "BLE Details",
+                    "description": "Details of the FlexiBLE device's BLE implementation",
+                    "$ref": "#/definitions/FlexiBLEDeviceBle"
+                },
+                "config_values": {
+                    "title": "Device Configurations",
+                    "description": "Configuration values for the FlexiBLE device",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Value"
+                    }
+                },
+                "commands": {
+                    "title": "Device Commands",
+                    "description": "Commands that can be initaited by the central ",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Command"
+                    }
+                },
+                "data_streams": {
+                    "title": "Data Streams",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/DataStream"
+                    }
+                }
+            },
+            "required": [
+                "ble",
+                "commands",
+                "config_values",
+                "data_streams",
+                "description",
+                "flexible_version",
+                "name"
+            ],
+            "title": "FlexiBLEDevice"
+        },
+        "FlexiBLEDeviceBle": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "spec_services": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "info_service_uuid": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "device_in_char_uuid": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "device_out_char_uuid": {
+                    "type": "string",
+                    "format": "uuid"
+                }
+            },
+            "required": [
+                "device_in_char_uuid",
+                "device_out_char_uuid",
+                "info_service_uuid",
+                "spec_services"
+            ],
+            "title": "FlexiBLEDeviceBle"
+        },
+        "Command": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "command_code": {
+                    "type": "integer"
+                },
+                "app_requests": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AppRequest"
+                    }
+                }
+            },
+            "required": [
+                "app_requests",
+                "command_code"
+            ],
+            "title": "Command"
+        },
+        "AppRequest": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "responses": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/AppRequest"
+                    }
+                },
+                "response_type": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "code",
+                "description",
+                "name"
+            ],
+            "title": "AppRequest"
+        },
+        "Value": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "index": {
+                    "type": "integer"
+                },
+                "length": {
+                    "type": "integer"
+                },
+                "unit": {
+                    "anyOf": [
+                        {
+                            "type": "null"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                },
+                "multiplier": {
+                    "anyOf": [
+                        {
+                            "type": "number"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "data_type": {
+                    "type": "string"
+                },
+                "selection_type": {
+                    "anyOf": [
+                        {
+                            "type": "null"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                },
+                "default_value": {
+                    "$ref": "#/definitions/DefaultValue"
+                },
+                "options": {
+                    "anyOf": [
+                        {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Option"
+                            }
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "range": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/Range"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "variable_type": {
+                    "type": "string"
+                },
+                "depends_on": {
+                    "type": "null"
+                }
+            },
+            "required": [
+                "data_type",
+                "description",
+                "index",
+                "length",
+                "multiplier",
+                "name",
+                "unit"
+            ],
+            "title": "Value"
+        },
+        "DefaultValue": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "data_type": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string",
+                    "format": "integer"
+                }
+            },
+            "required": [
+                "data_type",
+                "value"
+            ],
+            "title": "DefaultValue"
+        },
+        "Option": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "value_int": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "description",
+                "name",
+                "value_int"
+            ],
+            "title": "Option"
+        },
+        "Range": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "start": {
+                    "type": "number"
+                },
+                "end": {
+                    "type": "number"
+                },
+                "step": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "end",
+                "start",
+                "step"
+            ],
+            "title": "Range"
+        },
+        "DataStream": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "precision": {
+                    "type": "string"
+                },
+                "config_values": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Value"
+                    }
+                },
+                "data_values": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Value"
+                    }
+                },
+                "ble": {
+                    "$ref": "#/definitions/DataStreamBle"
+                }
+            },
+            "required": [
+                "ble",
+                "config_values",
+                "data_values",
+                "description",
+                "id",
+                "name",
+                "precision"
+            ],
+            "title": "DataStream"
+        },
+        "DataStreamBle": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "service_uuid": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "data_char_uuid": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "config_char_uuid": {
+                    "type": "string",
+                    "format": "uuid"
+                }
+            },
+            "required": [
+                "config_char_uuid",
+                "data_char_uuid",
+                "service_uuid"
+            ],
+            "title": "DataStreamBle"
+        }
+    }
+}

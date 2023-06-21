@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "../device.schema.json",
+    "./app/**/*"
+  ]
+}
