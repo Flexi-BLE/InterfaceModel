@@ -13,4 +13,6 @@ npm install -g quicktype
 quicktype flexible-device.json -l schema -o schema.json -t FlexiBLEDevice
 ```
 
-Populate the details for the JSON Schema
+**NOTE**: The schema `flexible.schema.json` is generated from `flexible-device.json` using [QuickType](), however many details are manually edited:
+* `title` and `description` are added to all objects
+* 
