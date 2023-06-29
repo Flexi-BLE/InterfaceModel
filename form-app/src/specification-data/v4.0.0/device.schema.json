@@ -18,6 +18,12 @@
                     "examples": ["ExampleSensor is a sensor that does something"],
                     "type": "string"
                 },
+                "can_group": {
+                    "title": "Devices Can Group",
+                    "description": "Indicates if the device can be grouped with other devices, in which case time synchronization is required",
+                    "type": "boolean",
+                    "default": false
+                },
                 "flexible_version": {
                     "const": "0.4.0",
                     "default": "0.4.0",
@@ -34,7 +40,7 @@
                     "description": "Configuration values for the FlexiBLE device",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Value"
+                        "$ref": "#/definitions/ConfigValue"
                     }
                 },
                 "commands": {
@@ -68,9 +74,9 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "spec_services": {
-                    "title": "BLE GATT Services",
-                    "description": "Standarized GATT Services (from Bluetooth specification)",
+                "ble_services": {
+                    "title": "Standard BLE Services",
+                    "description": "Standard BLE GATT (from Bluetooth specification) which are supported by FlexiBLE Applications",
                     "type": "array",
                     "items": {
                         "type": "string",
@@ -96,6 +102,13 @@
                     "type": "string",
                     "format": "uuid",
                     "default": "1a220005-c2ed-4d11-ad1e-fc06d8a02d37",
+                    "readOnly": true
+                },
+                "device_role_char_uuid": {
+                    "title": "FlexiBLE Device Role Characteristic UUID",
+                    "type": "string",
+                    "format": "uuid",
+                    "default": "1a220006-c2ed-4d11-ad1e-fc06d8a02d37",
                     "readOnly": true
                 }
             },
@@ -202,7 +215,85 @@
             ],
             "title": "CommandResponse"
         },
-        "Value": {
+        "ConfigValue": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "name": {
+                    "title": "Configuration Name",
+                    "description": "User friendly name for the data value",
+                    "type": "string"
+                },
+                "description": {
+                    "title": "Configuration Description",
+                    "description": "User friendly description for the data value",
+                    "type": "string"
+                },
+                "length": {
+                    "title": "Length",
+                    "description": "Length of the configuration in bits",
+                    "type": "integer"
+                },
+                "unit": {
+                    "title": "Unit of Measurement",
+                    "description": "a user-friendly unit, optional",
+                    "type": "string"
+                },
+                "data_type": {
+                    "title": "Data Type",
+                    "type": "string",
+                    "enum": ["int", "uint", "float", "ascii", "utf-8"]
+                },
+                "selection_type": {
+                    "title": "Selection Type",
+                    "type": "string",
+                    "enum": ["range", "single", "multi"]
+                },
+                "default_value": {
+                    "title": "Default Value",
+                    "description": "Default value for the configuration",
+                    "type": "string"
+                }
+            },
+            "required": [],
+            "dependencies": {
+                "selection_type": {
+                    "oneOf": [
+                        {
+                            "properties": {
+                                "selection_type": {
+                                    "enum": ["range"]
+                                },
+                                "range": {
+                                    "$ref": "#/definitions/Range"
+                                }
+                            },
+                            "required": [
+                                "range"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "selection_type": {
+                                    "enum": ["single", "multi"]
+                                },
+                                "options": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Option"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "options"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "title": "Configuration Value"
+        },
+        "DataValue": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -216,80 +307,67 @@
                     "description": "User friendly description for the data value",
                     "type": "string"
                 },
-                "index": {
-                    "title": "Data Value Index",
-                    "description": "Explicit order of the data value",
-                    "type": "integer"
-                },
                 "length": {
-                    "title": "Data Value Length",
-                    "description": "Length of the data value in bytes",
+                    "title": "Length",
+                    "description": "Length of the configuration in bits",
                     "type": "integer"
                 },
                 "unit": {
                     "title": "Unit of Measurement",
+                    "description": "a user-friendly unit, optional",
                     "type": "string"
                 },
                 "multiplier": {
                     "title": "Value Multiplier",
-                    "type": "number"
+                    "type": "number",
+                    "default": 0.0
                 },
                 "data_type": {
                     "title": "Data Type",
-                    "description": "Type of the data value",
                     "type": "string",
                     "enum": ["int", "uint", "float", "ascii", "utf-8"]
-                },
-                "selection_type": {
-                    "type": "string",
-                    "enum": ["range", "single", "multi"]
-                },
-                "default_value": {
-                    "title": "Default",
-                    "$ref": "#/definitions/DefaultValue"
-                },
-                "options": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Option"
-                    }
-                },
-                "range": {
-                    "$ref": "#/definitions/Range"
                 },
                 "variable_type": {
+                    "title": "Variable Type",
                     "type": "string",
                     "enum": ["none", "value", "tag"]
-                },
-                "depends_on": {
-                    "type": "string"
                 }
             },
-            "required": [
-            ],
-            "title": "Value"
-        },
-        "DefaultValue": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "data_type": {
-                    "title": "Data Type",
-                    "description": "Type of the data value",
-                    "type": "string",
-                    "enum": ["int", "uint", "float", "ascii", "utf-8"]
-                },
-                "value": {
-                    "title": "Value",
-                    "description": "String representation of the default value",
-                    "type": "string"
+            "required": [],
+            "dependencies": {
+                "selection_type": {
+                    "oneOf": [
+                        {
+                            "properties": {
+                                "variable_type": {
+                                    "enum": ["value"]
+                                },
+                                "depends_on": {
+                                    "title": "Depends On",
+                                    "description": "A tag value which this value depends, optional. Used for graphing.",
+                                    "type": "string",
+                                    "default": "none"
+                                }
+                            },
+                            "required": [
+                                "variable_type",
+                                "depends_on"
+                            ]
+                        },
+                        {
+                            "properties": {
+                                "variable_type": {
+                                    "enum": ["none", "tag"]
+                                }
+                            },
+                            "required": [
+                                "variable_type"
+                            ]
+                        }
+                    ]
                 }
             },
-            "required": [
-                "data_type",
-                "value"
-            ],
-            "title": "DefaultValue"
+            "title": "Data Value"
         },
         "Option": {
             "type": "object",
@@ -338,31 +416,42 @@
             "additionalProperties": false,
             "properties": {
                 "id": {
+                    "title": "ID",
                     "type": "string"
                 },
                 "name": {
+                    "title": "Name",
+                    "description": "User friendly name for the data stream",
                     "type": "string"
                 },
                 "description": {
+                    "title": "Description",
+                    "description": "User friendly description for the data stream",
                     "type": "string"
                 },
                 "precision": {
+                    "title": "Precision",
+                    "description": "Time precision of the data stream",
                     "type": "string",
-                    "enum": ["ms", "us"]
+                    "enum": ["ms", "us"],
+                    "default": "ms"
                 },
                 "config_values": {
+                    "title": "Configurations",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Value"
+                        "$ref": "#/definitions/ConfigValue"
                     }
                 },
                 "data_values": {
+                    "title": "Data Values",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Value"
+                        "$ref": "#/definitions/DataValue"
                     }
                 },
                 "ble": {
+                    "title": "BLE Details",
                     "$ref": "#/definitions/DataStreamBle"
                 }
             },
@@ -375,21 +464,24 @@
                 "name",
                 "precision"
             ],
-            "title": "DataStream"
+            "title": "Data Stream"
         },
         "DataStreamBle": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
                 "service_uuid": {
+                    "title": "GATT Service UUID",
                     "type": "string",
                     "format": "uuid"
                 },
                 "data_char_uuid": {
+                    "title": "Data Characteristic UUID",
                     "type": "string",
                     "format": "uuid"
                 },
                 "config_char_uuid": {
+                    "title": "Configuration Characteristic UUID",
                     "type": "string",
                     "format": "uuid"
                 }
@@ -399,7 +491,7 @@
                 "data_char_uuid",
                 "service_uuid"
             ],
-            "title": "DataStreamBle"
+            "title": "Data Stream BLE Details"
         }
     }
 }

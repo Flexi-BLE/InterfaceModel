@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Container } from '@mui/material';
+import {Container, Typography, Button } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 import Form from '@rjsf/mui';
 import { customizeValidator } from '@rjsf/validator-ajv8';
 
-import schema from '../data/device.schema.json';
+import schema from '../specification-data/v4.0.0/device.schema.json';
 
 // initialize validator based on draft-06 (generated from quick)
 const metaSchemaDraft06 = require('ajv/lib/refs/json-schema-draft-06.json');
@@ -22,8 +23,6 @@ function SpecForm(props) {
     const handleFormSubmit = ({formData}, e) => {
         console.log('form submitted');
     }
-
-    console.log('spec: ', props)
 
     return (
         <Container maxWidth="md">

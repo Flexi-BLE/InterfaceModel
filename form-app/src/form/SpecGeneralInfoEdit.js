@@ -3,8 +3,8 @@ import Form from "@rjsf/mui";
 import {Container} from "@mui/material";
 import { customizeValidator } from '@rjsf/validator-ajv8';
 
-import schema from '../data/device.schema.json';
-import { GeneralUISchema } from '../data/device.uiSchema.js'
+import schema from '../specification-data/v4.0.0/device.schema.json';
+import { GeneralUISchema } from '../specification-data/v4.0.0/device.uiSchema.js'
 
 // initialize validator based on draft-06 (generated from quick)
 const metaSchemaDraft06 = require('ajv/lib/refs/json-schema-draft-06.json');
