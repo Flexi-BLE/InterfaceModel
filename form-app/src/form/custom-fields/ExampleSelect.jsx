@@ -2,7 +2,7 @@ import {useState} from "react";
 import { Box, FormControl, Select, MenuItem } from "@mui/material";
 
 
-export const ExampleSelect = ({ options, onSelection }) => {
+export const ExampleSelect = ({ values, optionTitleKey, onSelection }) => {
     const [value, setValue] = useState('');
 
     const handleChange = (event) => {
@@ -23,9 +23,9 @@ export const ExampleSelect = ({ options, onSelection }) => {
                     renderValue={() => 'Add from example'}
                     sx={{ minWidth: 200, m: 1 }}
                 >
-                    {options.map((option, index) => (
-                        <MenuItem key={index} value={option}>
-                            {option}
+                    {values.map((value, index) => (
+                        <MenuItem key={index} value={value}>
+                            {value[optionTitleKey]}
                         </MenuItem>
                     ))}
                 </Select>

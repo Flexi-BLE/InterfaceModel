@@ -1,13 +1,60 @@
 {
   "precision": "ms",
-  "config_values": [],
-  "data_values": [],
+  "configValues": [
+    {
+      "id": "__UUID+100__",
+      "name": "Sensor Toggle",
+      "range": {},
+      "dataType": "bool",
+      "selectionType": "toggle",
+      "defaultValue": "0",
+      "length": 1,
+      "description": "Toggle a sensor on/off"
+    },
+    {
+      "id": "__UUID+200__",
+      "name": "Desired Frequency",
+      "range": {
+        "start": 0,
+        "end": 1000,
+        "step": 20
+      },
+      "description": "A frequency for sensor data collection",
+      "unit": "Hertz",
+      "length": 8,
+      "dataType": "uint",
+      "selectionType": "range",
+      "defaultValue": "20"
+    }
+  ],
+  "dataValues": [
+    {
+      "id": "__UUID+1000__",
+      "name": "Random Number",
+      "multiplier": 0,
+      "description": "Just a random number",
+      "unit": "arb",
+      "length": 4,
+      "dataType": "uint",
+      "variableType": "value"
+    },
+    {
+      "id": "UUID+2000",
+      "name": "_offset",
+      "multiplier": 0,
+      "description": "The time since the last reading (in data stream precision units)",
+      "unit": "ms",
+      "length": 4,
+      "dataType": "uint",
+      "variableType": "none"
+    }
+  ],
   "ble": {
-    "service_uuid": "0f6bebb7-daa3-4307-96c4-23584f0e9957",
-    "data_char_uuid": "0f6bebb8-daa3-4307-96c4-23584f0e9957",
-    "config_char_uuid": "0f6bebb9-daa3-4307-96c4-23584f0e9957"
+    "serviceUuid": "__UUID+1__",
+    "dataCharUuid": "__UUID+2__",
+    "configCharUuid": "__UUID+3__"
   },
-  "id": "0f6bebb7-daa3-4307-96c4-23584f0e9957",
-  "name": "RandomNumber",
+  "id": "__UUID__",
+  "name": "RandomNumber __POSITION__",
   "description": "Generate a stream of random numbers"
 }

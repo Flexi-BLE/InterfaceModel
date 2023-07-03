@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {Container, Typography, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import Form from '@rjsf/mui';
@@ -8,19 +8,20 @@ import schema from '../specification-data/v4.0.0/device.schema.json';
 
 // initialize validator based on draft-06 (generated from quick)
 const metaSchemaDraft06 = require('ajv/lib/refs/json-schema-draft-06.json');
+
 const validator = customizeValidator({
   additionalMetaSchemas: [metaSchemaDraft06],
 });
 
 
 function SpecForm(props) {
+    const { spec, setSpec, uiSchema } = props;
 
     const handleFormChange = ({ formData }) => {
-        console.log('new spec: ', formData);
-        props.setSpec(formData);
+        setSpec(formData);
     }
 
-    const handleFormSubmit = ({formData}, e) => {
+        const handleFormSubmit = ({formData}, e) => {
         console.log('form submitted');
     }
 
@@ -29,8 +30,8 @@ function SpecForm(props) {
             <Form
                 sx={{ p: 10 }}
                 schema={schema}
-                uiSchema={props.uiSchema}
-                formData={props.spec}
+                uiSchema={uiSchema}
+                formData={spec}
                 validator={validator}
                 onChange={handleFormChange}
                 onSubmit={handleFormSubmit}

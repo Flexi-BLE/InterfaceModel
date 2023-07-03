@@ -1,214 +1,144 @@
 import { React } from "react";
-import {
-    Empty,
-    CollapsableField,
-    ArrayFieldTitleName,
-    ArrayFieldItem,
-    CollapsableArrayItem,
-    BasicArrayFieldItemTemplate,
-    EmptyWithChildren, BasicArrayFieldTemplate,
-} from "../../form/custom-fields/CustomFormTemplates";
-import {
-    DataStreamArrayFieldTemplate, DataStreamCollapsableArrayItem, DataStreamConfigTitleField,
-    DataStreamFieldTitle,
-    DataStreamTitleField
-} from "../../form/custom-fields/DataStream";
+import _ from 'lodash';
+import { Empty } from "../../form/custom-fields/CustomFormTemplates";
+import { ArrayFieldTemplate } from "../../form/custom-fields/ArrayFieldTemplate";
+import { CollapsableArrayItemTemplate } from "../../form/custom-fields/CollapsableArrayItemTemplate";
+
+import { ExampleDataStreams } from "./examples/DataStream/DataStream";
+
 
 export const uiSchema = {
-    "data_streams": {
-      "items": {
-        "ui:FieldTemplate": CollapsableField
-      }
-    },
-    "ble": {
-      "ui:FieldTemplate": CollapsableField
-    }
-  }
-
-export const GeneralUISchema = {
-    'ui:title': "FlexiBLE Device: General Information",
+    'ui:TitleFieldTemplate': Empty,
     'ui:globalOptions': { copyable: true },
-    'config_values': {
-        "ui:widget": "hidden"
-    },
-    'commands': {
-        "ui:widget": "hidden"
-    },
-    'ble': {
-        "ui:widget": "hidden"
-    },
-    'data_streams': {
-        "ui:widget": "hidden"
-    }
-};
-
-export const BLEDetailUISchema = {
-    'ui:title': "FlexiBLE Device: BLE Details",
-    'ui:globalOptions': { copyable: true },
+    'id': { },
+    'name': { },
+    'description': { },
+    'canGroup': { },
+    'flexibleVersion': { },
     'ble': {
         'ui:TitleFieldTemplate': Empty,
         'ui:title': null
     },
-    'name': {
-        "ui:widget": "hidden"
-    },
-    'description': {
-        "ui:widget": "hidden"
-    },
-    'can_group': {
-        "ui:widget": "hidden"
-    },
-    'flexible_version': {
-        "ui:widget": "hidden"
-    },
-    'config_values': {
-        "ui:widget": "hidden"
-    },
-    'commands': {
-        "ui:widget": "hidden"
-    },
-    'data_streams': {
-        "ui:widget": "hidden"
-    }
-};
-
-export const ConfigUISchema = {
-    'ui:title': "FlexiBLE Device: Global Configurations",
-    'name': {
-        "ui:widget": "hidden"
-    },
-    'description': {
-        "ui:widget": "hidden"
-    },
-    'can_group': {
-        "ui:widget": "hidden"
-    },
-    'flexible_version': {
-        "ui:widget": "hidden"
-    },
-    'ble': {
-        "ui:widget": "hidden"
-    },
-    'commands': {
-        "ui:widget": "hidden"
-    },
-    'data_streams': {
-        "ui:widget": "hidden"
-    }
-}
-
-export const CommandUISchema= {
-    'ui:title': "FlexiBLE Device: Commands",
-    'commands': {
-        'ui:ArrayFieldItemTemplate': EmptyWithChildren,
-        'items': {
-            'ui:TitleFieldTemplate': Empty,
-            'ui:FieldTemplate': CollapsableArrayItem,
-        }
-    },
-    'name': {
-        "ui:widget": "hidden"
-    },
-    'description': {
-        "ui:widget": "hidden"
-    },
-    'can_group': {
-        "ui:widget": "hidden"
-    },
-    'flexible_version': {
-        "ui:widget": "hidden"
-    },
-    'ble': {
-        "ui:widget": "hidden"
-    },
-    'config_values': {
-        "ui:widget": "hidden"
-    },
-    'data_streams': {
-        "ui:widget": "hidden"
-    }
-}
-
-export const DataStreamUISchema= {
-    'ui:TitleFieldTemplate': DataStreamTitleField,
-    'data_streams': {
-        'ui:ArrayFieldTemplate': BasicArrayFieldTemplate,
+    'configValues': {
+        'ui:ArrayFieldTemplate': ArrayFieldTemplate,
         'ui:ArrayFieldItemTemplate': Empty,
         'items': {
-            'ui:FieldTemplate': DataStreamCollapsableArrayItem,
+            'ui:FieldTemplate': CollapsableArrayItemTemplate,
             'ui:TitleFieldTemplate': Empty,
+            'options': {
+                'ui:ArrayFieldTemplate': ArrayFieldTemplate,
+                'ui:ArrayFieldItemTemplate': Empty,
+                'items': {
+                    'ui:FieldTemplate': CollapsableArrayItemTemplate,
+                    'ui:TitleFieldTemplate': Empty,
+                }
+            },
+        }
+    },
+    'commands': {
+        'ui:ArrayFieldTemplate': ArrayFieldTemplate,
+        'ui:ArrayFieldItemTemplate': Empty,
+        'items': {
+            'ui:FieldTemplate': CollapsableArrayItemTemplate,
+            'ui:TitleFieldTemplate': Empty,
+        }
+    },
+    'dataStreams': {
+        'ui:ArrayFieldTemplate': ArrayFieldTemplate,
+        'ui:ArrayFieldItemTemplate': Empty,
+        'items': {
+            'ui:FieldTemplate': CollapsableArrayItemTemplate,
+            'ui:TitleFieldTemplate': Empty,
+            'ui:examples': ExampleDataStreams,
             'id': {
                 'ui:readonly': true
             },
             'ble': {
                 'ui:readonly': true
             },
-            'config_values': {
-                'ui:TitleFieldTemplate': DataStreamConfigTitleField,
-                'ui:ArrayFieldItemTemplate': EmptyWithChildren,
+            'configValues': {
+                'ui:ArrayFieldTemplate': ArrayFieldTemplate,
+                'ui:ArrayFieldItemTemplate': Empty,
                 'items': {
                     'ui:TitleFieldTemplate': Empty,
-                    'ui:FieldTemplate': CollapsableArrayItem,
-                    'uiid': "config_values",
+                    'ui:FieldTemplate': CollapsableArrayItemTemplate,
+                    'uiid': "configValues",
                     'ui:order': [
+                        'id',
                         'name',
                         'description',
                         'unit',
                         'length',
                         'multiplier',
-                        'data_type',
-                        'selection_type',
+                        'dataType',
+                        'selectionType',
                         'range',
                         'options',
-                        'default_value',
-                        'variable_type',
-                        'depends_on'
+                        'defaultValue',
+                        'variableType',
+                        'dependsOn'
                     ]
                 },
             },
-            'data_values': {
-                'ui:ArrayFieldItemTemplate': EmptyWithChildren,
+            'dataValues': {
+                'ui:ArrayFieldTemplate': ArrayFieldTemplate,
+                'ui:ArrayFieldItemTemplate': Empty,
                 'items': {
                     'ui:TitleFieldTemplate': Empty,
-                    'ui:FieldTemplate': CollapsableArrayItem,
-                    'uiid': "config_values",
+                    'ui:FieldTemplate': CollapsableArrayItemTemplate,
                     'ui:order': [
+                        'id',
                         'name',
                         'description',
                         'unit',
                         'length',
                         'multiplier',
-                        'data_type',
-                        'selection_type',
+                        'dataType',
+                        'selectionType',
                         'range',
                         'options',
-                        'default_value',
-                        'variable_type',
-                        'depends_on'
+                        'defaultValue',
+                        'variableType',
+                        'dependsOn'
                     ]
                 }
             }
         }
     },
-    'name': {
-        "ui:widget": "hidden"
+};
+
+export const schemaRouteDetails = {
+    'general': {
+        'hidden': ['ble', 'configValues', 'commands', 'dataStreams']
     },
-    'description': {
-        "ui:widget": "hidden"
+    'ble-details': {
+        'hidden': ['id', 'name', 'description', 'canGroup', 'flexibleVersion', 'configValues', 'commands', 'dataStreams']
     },
-    'can_group': {
-        "ui:widget": "hidden"
-    },
-    'flexible_version': {
-        "ui:widget": "hidden"
-    },
-    'ble': {
-        "ui:widget": "hidden"
-    },
-    'config_values': {
-        "ui:widget": "hidden"
+    'config-values': {
+        'hidden': ['id', 'name', 'description', 'canGroup', 'flexibleVersion', 'ble', 'commands', 'dataStreams']
     },
     'commands': {
-        "ui:widget": "hidden"
+        'hidden': ['id', 'name', 'description', 'canGroup', 'flexibleVersion', 'ble', 'configValues', 'dataStreams']
+    },
+    'data-streams': {
+        'hidden': ['id', 'name', 'description', 'canGroup', 'flexibleVersion', 'ble', 'configValues', 'commands']
     }
+};
+
+export const uiSchemaForRoute = (route) => {
+    const uiSchemaForRoute = _.cloneDeep(uiSchema);
+
+    Object.keys(uiSchemaForRoute).forEach((key) => {
+        if ( schemaRouteDetails[route].hidden.includes(key) ) {
+            uiSchemaForRoute[key]['ui:widget'] = "hidden";
+        } else {
+            if ( uiSchemaForRoute[key]['ui:widget'] ) {
+                uiSchemaForRoute[key]['ui:widget'] = uiSchema[key]['ui:widget'];
+            } else {
+                delete uiSchemaForRoute[key]['ui:widget'];
+            }
+        }
+    });
+
+    return uiSchemaForRoute;
 }

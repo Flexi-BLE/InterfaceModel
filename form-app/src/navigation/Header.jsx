@@ -1,11 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { AppBar, Toolbar, Typography, IconButton } from '@mui/material';
 import { FormControl, InputLabel, Select, MenuItem, Button  } from "@mui/material";
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { styled } from '@mui/material/styles';
 
-import ConfigLoader from './ConfigLoader';
-import { FlexiBLEVersions, FlexiBLEDefaultVersion } from '../specification-data/FlexiBLESpecification';
+import SpecificationLoader from './SpecificationLoader';
+import { FlexiBLEVersions, FlexiBLEDefaultVersion } from '../utilities/SpecificationUtils';
+import SpecMenu from "./SpecMenu";
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
     zIndex: theme.zIndex.drawer + 1,
@@ -27,6 +28,7 @@ const StyledVersionSelect = styled(Select)(({ theme }) => ({
 
 function Header({spec, setSpec, version, setVersion}) {
     const [configDialogOpen, setConfigDialogOpen] = React.useState(false);
+
     const openConfigDialog = () => {
         setConfigDialogOpen(true);
     };
@@ -45,20 +47,7 @@ function Header({spec, setSpec, version, setVersion}) {
                 <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
                     FlexiBLE Device Specification Editor
                 </Typography>
-                <Button
-                    variant="outlined"
-                    color="secondary"
-                    sx={{
-                        borderColor: 'white',
-                        color: 'white',
-                        mr: 2
-                    }}
-                    onClick={openConfigDialog}>
-
-                    { spec.name === undefined && "Load Specification" }
-                    { spec.name !== undefined && spec.name }
-
-                </Button>
+                <SpecMenu />
                 <StyledVersionSelect
                     value={version}
                     onChange={handleVersionChange}
@@ -73,7 +62,6 @@ function Header({spec, setSpec, version, setVersion}) {
                     <GitHubIcon />
                 </IconButton>
             </Toolbar>
-            <ConfigLoader open={configDialogOpen} onClose={closeConfigDialog} />
         </StyledAppBar>
     );
 }
