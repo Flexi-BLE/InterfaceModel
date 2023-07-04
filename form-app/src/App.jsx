@@ -12,10 +12,10 @@ import SpecForm from "./form/SpecForm";
 import { SpecContext } from "./SpecContext";
 
 import { uiSchema, schemaRouteDetails, uiSchemaForRoute } from "./specification-data/v4.0.0/device.uiSchema.js";
-import schema from './specification-data/v4.0.0/device.schema.json';
+import schema from "./specification-data/v4.0.0/device.schema.json";
 
 import RAWJSONEditor from "./form/RawJSONEditor";
-import {IntermediateSpecificationEditor} from "./form/IntermediateSpecificationEditor";
+import { CodeViewer } from "./artifacts/CodeViewer";
 
 import { FlexiBLEDefaultVersion, createEmptySpec } from "./utilities/SpecificationUtils";
 function App() {
@@ -95,7 +95,7 @@ function App() {
                                 <Route
                                     path={"/artifacts"}
                                     element={
-                                        <IntermediateSpecificationEditor />
+                                        <CodeViewer />
                                     }
                                 />
 

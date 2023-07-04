@@ -6,32 +6,36 @@ import Mustache from 'mustache';
 import SQLSchemaTemplate from './templates/flexible-db-schema.mustache.sql';
 
 import { serializeSpec } from '../artifacts/TemplateSerializer';
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
+import { Tab, Tabs, Box, Paper } from "@mui/material";
 
 const files = [
 	{
 		'name': 'spec.json',
 		'code': (spec, setCode) => {
 			setCode(JSON.stringify(spec, null, 2));
-		}
+		},
+		'language': 'json'
 	},
 	{
 		'name': 'spec.ir.json',
 		'code': (spec, setCode) => {
-			setCode(JSON.stringify(serializeSpec(spec), null, 2));
-		}
+			serializeSpec(spec)
+			setCode(JSON.stringify(spec, null, 2));
+		},
+		'language': 'json'
 	},
 	{
 		'name': 'spec.sql',
 		'code': (spec, setCode) => {
 			fetch(SQLSchemaTemplate)
-				.then((res) => { res.text() })
-				.then(text => {
-					setCode(Mustache.render(text, serializeSpec(spec)));
+				.then((res) => res.text())
+				.then((textContext) => {
+					serializeSpec(spec);
+					setCode(Mustache.render(textContext, spec));
 				})
 
-		}
+		},
+		'language': 'sql'
 	}
 ]
 
@@ -66,13 +70,15 @@ export const CodeViewer = () => {
 				))}
 			</Tabs>
 
-			<Editor
-				height="90vh"
-				theme="dark"
-				language="javascript"
-				value={code}
-				onChange={(newCode) => setFileCode(newCode)}
-			/>
+			<Box mt={2}>
+				<Editor
+					height="80vh"
+					theme="dark"
+					language={files[tabIndex].language}
+					value={code}
+					onChange={(newCode) => setFileCode(newCode)}
+				/>
+			</Box>
 		</div>
 	);
 };

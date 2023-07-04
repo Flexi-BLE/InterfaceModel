@@ -1,13 +1,14 @@
-CREATE DATABASE IF NOT EXISTS main;
+CREATE DATABASE IF NOT EXISTS {{_name}}
 
 -- MARK: - Device
+
 -- device stores device connection metadata
-CREATE TABLE "device"
+CREATE TABLE IF NOT EXISTS "device"
 (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "device_type" TEXT NOT NULL,
     "device_name" TEXT NOT NULL,
-    "role" INTEGER,
+    "role" INTEGER
 );
 
 CREATE TABLE IF NOT EXISTS "device_connection"
@@ -28,8 +29,6 @@ CREATE TABLE IF NOT EXISTS "device_time"
 );
 
 -- MARK: - Experiments
-
--- experiments represent a range of time
 CREATE TABLE IF NOT EXISTS "experiment" (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "name" TEXT NOT NULL,
@@ -43,7 +42,6 @@ CREATE TABLE IF NOT EXISTS "experiment" (
     "track_gps" BOOLEAN
 );
 
--- timemarkers represent a a point in time
 CREATE TABLE IF NOT EXISTS "timemarker"
 (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -53,10 +51,26 @@ CREATE TABLE IF NOT EXISTS "timemarker"
     "ts" DATETIME NOT NULL,
     "uploaded" BOOLEAN,
     FOREIGN KEY("experiment_id") REFERENCES "experiment"("id") ON DELETE CASCADE
-)
+);
+
+-- MARK: - Device Configurations
+CREATE TABLE IF NOT EXISTS "device_configuration"
+(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "ts" INTEGER NOT NULL,
+    "uploaded" BOOLEAN DEFAULT 0,
+    "device_id" INTEGER,
+{{#configValues}}
+    "{{_name}}" {{_sqliteDataType}},
+{{/configValues}}
+    FOREIGN KEY("device_id") REFERENCES "device"("id") ON DELETE CASCADE
+);
+
+-- MARK: - Commands
+-- TODO: implement storage for commands
 
 
--- data streams
+-- MARK: - Data Streams
 CREATE TABLE IF NOT EXISTS "data_stream"
 (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -70,16 +84,42 @@ CREATE TABLE IF NOT EXISTS "data_stream"
 
 {{#dataStreams}}
 
-CREATE TABLE IF NOT EXISTS "{{name}}_configuration"
+CREATE TABLE IF NOT EXISTS "{{_name}}_configuration"
 (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "ts" INTEGER NOT NULL,
     "uploaded" BOOLEAN DEFAULT 0,
-    "device_id" INTEGER,
-    FOREIGN KEY("device_id") REFERENCES "device"("id") ON DELETE CASCADE
+    "device_id" INTEGER NOT NULL,
     {{#configValues}}
-    "{{pName}}" {{sqliteType}}
+    "{{_name}}" {{_sqliteDataType}},
     {{/configValues}}
+    FOREIGN KEY("device_id") REFERENCES "device"("id") ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS "{{_name}}"
+(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "ts" INTEGER NOT NULL,
+    "created_at" DATETIME NOT NULL,
+    "uploaded" BOOLEAN DEFAULT 0,
+    "device_id" INTEGER NOT NULL,
+    {{#dataValues}}
+    "{{_name}}" {{_sqliteDataType}},
+    {{/dataValues}}
+    FOREIGN KEY("device_id") REFERENCES "device"("id") ON DELETE CASCADE
 );
 
 {{/dataStreams}}
+
+
+-- MARK: - Throughput
+CREATE TABLE IF NOT EXISTS "throughput"
+(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "ts" INTEGER NOT NULL,
+    "data_stream_id" INTEGER NOT NULL,
+    "bytes" INTEGER,
+    "device_id" INTEGER NOT NULL,
+    FOREIGN KEY("device_id") REFERENCES "device"("id") ON DELETE CASCADE
+    FOREIGN KEY("data_stream_id") REFERENCES "data_stream"("id")
+);
