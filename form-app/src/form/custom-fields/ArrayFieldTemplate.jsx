@@ -1,5 +1,5 @@
 import {useContext} from "react";
-import {SpecContext} from "../../SpecContext";
+import {SpecContext} from "../../specification-data/SpecContext";
 import {parseObject, setProperyWithSchemaId} from "../../utilities/JSONSchemaFormUtils";
 import {Box, Button, Divider, Typography} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -12,6 +12,7 @@ export const ArrayFieldTemplate = (props) => {
     const { idSchema, schema, uiSchema, registry } = props;
 
     const examples = uiSchema.items['ui:examples'];
+    console.log(`examples ${schema.title}`, examples);
 
     const handleExampleChange = (selection) => {
         const newSpec = JSON.parse(JSON.stringify(spec));

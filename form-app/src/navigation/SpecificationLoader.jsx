@@ -12,9 +12,10 @@ import MonacoEditor from '@monaco-editor/react';
 
 import { fetchAndValidateJSON, validateJSON } from '../utilities/SpecificationUtils';
 import { isValidUrl } from '../utilities/GeneralUtilities';
-import { SpecContext } from "../SpecContext";
+import { SpecContext } from "../specification-data/SpecContext";
 import {Alert, Box, Typography} from "@mui/material";
 import RecentSpecsTable from "./RecentSpecs";
+import {setCurrentSpec} from "../utilities/CookieUtils";
 
 function SpecificationLoader({ open, onClose }) {
     const { spec, setSpec, schema } = useContext(SpecContext);
@@ -54,6 +55,7 @@ function SpecificationLoader({ open, onClose }) {
         try {
             const json = await fetchAndValidateJSON(url, schema);
             setSpec(json);
+            setCurrentSpec(json, url);
             onClose();
         } catch (err) {
             setErrorMessage(err.message);
@@ -69,6 +71,7 @@ function SpecificationLoader({ open, onClose }) {
         try {
             validateJSON(json, schema);
             setSpec(json);
+            setCurrentSpec(json, null);
             onClose();
         } catch (err) {
             setErrorMessage(err.message);

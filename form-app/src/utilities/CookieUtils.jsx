@@ -43,10 +43,25 @@ export const getRecentSpecs = () => {
     return JSON.parse(recentSpecs);
 }
 
-export const setCurrentSpec = (spec) => {
+export const setCurrentSpec = (spec, url) => {
+    const specString = JSON.stringify(spec);
+    const base64Spec = btoa(specString);
+    const obj = { spec: base64Spec, url: url, date: Date.now() };
 
+    Cookies.set('currentSpec', JSON.stringify(obj));
 }
 
 export const getCurrentSpec = () => {
+    const cookie = Cookies.get('currentSpec');
+    if ( !cookie ) {
+        return null;
+    }
 
+    const currentSpec = JSON.parse(cookie);
+
+    // recode base64 spec
+    console.log('CURRENT SPEC', currentSpec);
+    currentSpec.spec = JSON.parse(atob(currentSpec.spec));
+
+    return currentSpec;
 }

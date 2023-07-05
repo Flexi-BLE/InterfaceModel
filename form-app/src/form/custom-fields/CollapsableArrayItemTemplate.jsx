@@ -1,5 +1,5 @@
 import {useContext} from "react";
-import {SpecContext} from "../../SpecContext";
+import {SpecContext} from "../../specification-data/SpecContext";
 import {moveItemAtSchemaId, removeItemAtSchemaId} from "../../utilities/JSONSchemaFormUtils";
 import {Accordion, AccordionDetails, AccordionSummary, Box, IconButton, Typography} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";

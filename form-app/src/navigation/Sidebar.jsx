@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText, IconButton, Box, Collapse, ListItemButton } from '@mui/material';
+import {
+    Drawer,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+    IconButton,
+    Box,
+    Collapse,
+    ListItemButton,
+    Chip
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
@@ -94,7 +105,12 @@ function Sidebar() {
                         <ListItemIcon>
                             <TagIcon />
                         </ListItemIcon>
-                        {isOpen && <ListItemText primary="Commands" />}
+                        {isOpen &&
+                            <>
+                            <ListItemText primary="Commands" />
+                            <Chip label="dev" color="warning" />
+                            </>
+                        }
                     </ListItemButton>
                     <ListItemButton sx={{ pl: 4 }} component={Link} to="/spec-editor/data-streams">
                         <ListItemIcon>

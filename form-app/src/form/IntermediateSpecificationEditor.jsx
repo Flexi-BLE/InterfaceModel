@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { serializeSpec } from '../artifacts/TemplateSerializer';
 import { createEmptySpec } from "../utilities/SpecificationUtils";
 import schema from "../specification-data/v4.0.0/device.schema.json";
-import {SpecContext} from "../SpecContext";
+import {SpecContext} from "../specification-data/SpecContext";
 
 export const IntermediateSpecificationEditor = () => {
     const { spec, setSpec, schema } = useContext(SpecContext);

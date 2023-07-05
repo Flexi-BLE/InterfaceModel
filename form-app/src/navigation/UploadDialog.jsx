@@ -12,9 +12,11 @@ import {
 } from '@mui/material';
 import { uploadFileToS3, doesFileExist } from '../utilities/S3Service' // make sure to implement this function, see below
 import { saveRecentSpec } from '../utilities/CookieUtils';
-export default function UploadDialog({ open, onClose, spec }) {
+import {SpecContext} from "../specification-data/SpecContext";
+
+export default function UploadDialog({ open, onClose }) {
+    const { spec, setSpec, schema, specUrl, setSpecUrl } = React.useContext(SpecContext);
     const [loading, setLoading] = React.useState(false);
-    const [url, setUrl] = React.useState(null);
     const [error, setError] = React.useState(null);
     const [fileExists, setFileExists] = React.useState(false);
 
@@ -29,7 +31,6 @@ export default function UploadDialog({ open, onClose, spec }) {
             checkFileExists();
         } else {
             setLoading(false);
-            setUrl(null);
             setError(null);
             setFileExists(false);
         }
@@ -39,10 +40,12 @@ export default function UploadDialog({ open, onClose, spec }) {
         setLoading(true);
         try {
             const fileUrl = await uploadFileToS3(spec); // make sure to implement this function, see below
-            setUrl(fileUrl);
+            setSpecUrl(fileUrl);
 
             const fileName = fileUrl.split('/').pop();
             saveRecentSpec(spec, fileUrl);
+
+            setSpec(spec);
 
         } catch (err) {
             setError(err);
@@ -62,7 +65,7 @@ export default function UploadDialog({ open, onClose, spec }) {
                     Meaning this will be available to anyone with the URL.
                     Do you want to proceed?
                 </DialogContentText>
-                { fileExists && !error && !url &&
+                { fileExists && !error && !specUrl &&
                     <Alert severity="warning">
                         Specification already exists. Uploading will overwrite the file!
                     </Alert>
@@ -72,11 +75,11 @@ export default function UploadDialog({ open, onClose, spec }) {
                         Error uploading file: {error.message}
                     </Alert>
                 }
-                { url &&
+                { specUrl &&
                     <Alert severity="success">
                         File uploaded successfully! <br />
-                        <Link href={url} target="_blank" rel="noopener">
-                            {url}
+                        <Link href={specUrl} target="_blank" rel="noopener">
+                            {specUrl}
                         </Link>
                     </Alert>
                 }

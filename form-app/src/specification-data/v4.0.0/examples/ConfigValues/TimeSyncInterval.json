@@ -1,0 +1,15 @@
+{
+  "id": "__UUID__",
+  "name": "Time Synchronization Interval",
+  "length": 16,
+  "selectionType": "range",
+  "range": {
+    "start": 0,
+    "end": 1440,
+    "step": 5
+  },
+  "description": "The interval at which the devices request a reset for time synchronization",
+  "unit": "minutes",
+  "dataType": "uint",
+  "defaultValue": "15"
+}

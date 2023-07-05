@@ -1,4 +1,5 @@
 import AWS from 'aws-sdk';
+import {setCurrentSpec} from "./CookieUtils";
 
 
 const fileNameSpec = (spec) => {
@@ -10,11 +11,11 @@ const bucket = "flexible-specification-tool";
 // TODO: USE ENVIRONMENT VARIABLES!
 const s3 = new AWS.S3({
     forcePathStyle: false,
-    endpoint: "https://nyc3.digitaloceanspaces.com",
-    region: 'us-east-1',
+    endpoint: process.env.REACT_APP_SPACES_ENDPOINT,
+    region: process.env.REACT_APP_SPACES_REGION,
     credentials: {
-        accessKeyId: "DO00J7MVH2LXA4Q3E496",
-        secretAccessKey: "6d+GEEzDSy9Bxfp0Py5uBsNgDw+5EaBpdiAt3wIBy3w"
+        accessKeyId: process.env.REACT_APP_SPACES_ACCESS_KEY_ID,
+        secretAccessKey: process.env.REACT_APP_SPACES_SECRET_ACCESS_KEY
     }
 });
 
@@ -29,7 +30,7 @@ export const uploadFileToS3 = async (spec) => {
 
     try {
         const response = await s3.upload(params).promise();
-        console.log(response);
+        setCurrentSpec(spec, response.Location);
         return response.Location;
     } catch (err) {
         throw err

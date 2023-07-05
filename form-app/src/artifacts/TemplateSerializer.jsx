@@ -1,51 +1,65 @@
 
+import _ from 'lodash';
+
 export const serializeSpec = (spec) => {
-    insertProgrammaticString(spec, 'name');
-    insertSQLDataTypes(spec);
-}
+        var _spec = _.cloneDeep(spec);
+
+        _spec = insertProgrammaticString(_spec, 'name');
+        _spec = insertSQLDataTypes(_spec);
+
+        return _spec;
+    }
 
 const insertProgrammaticString = (obj, targetKey) => {
-    if (typeof obj !== 'object' || obj === null) return;
+    var _obj = _.cloneDeep(obj);
 
-    Object.entries(obj).forEach(([key, value]) => {
+    if (typeof _obj !== 'object' || _obj === null) return _obj;
+
+    Object.entries(_obj).forEach(([key, value]) => {
         if (key === targetKey && typeof value === 'string') {
-            obj[`_${targetKey}`] = value.toLowerCase().replace(/ /g, '_');
+            _obj[`_${targetKey}`] = value.toLowerCase().replace(/ /g, '_');
         }
 
         if (typeof value === 'object') {
-            insertProgrammaticString(value, targetKey);
+            _obj[key] = insertProgrammaticString(value, targetKey);
         }
     });
+
+    return _obj;
 };
 
 const insertSQLDataTypes = (obj) => {
-    if (typeof obj !== 'object' || obj === null) return;
+    var _obj = _.cloneDeep(obj);
 
-    const dataType = obj.dataType;
+    if (typeof _obj !== 'object' || _obj === null) return _obj;
+
+    const dataType = _obj.dataType;
     const key = '_sqliteDataType';
 
     if (dataType) {
         switch (dataType) {
             case 'int':
             case 'uint':
-                obj['_sqliteDataType'] = 'INTEGER';
+                _obj['_sqliteDataType'] = 'INTEGER';
                 break;
             case 'float':
-                obj['_sqliteDataType'] = 'REAL';
+                _obj['_sqliteDataType'] = 'REAL';
                 break;
             case 'ascii':
             case 'utf-8':
-                obj['_sqliteDataType'] = 'TEXT';
+                _obj['_sqliteDataType'] = 'TEXT';
                 break;
             default:
-                obj['_sqliteDataType'] = 'TEXT';
+                _obj['_sqliteDataType'] = 'TEXT';
                 break;
         }
     }
 
-    Object.entries(obj).forEach(([key, value]) => {
+    Object.entries(_obj).forEach(([key, value]) => {
         if (typeof value === 'object') {
-            insertSQLDataTypes(value);
+            _obj[key] = insertSQLDataTypes(value);
         }
     });
+
+    return _obj;
 }

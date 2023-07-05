@@ -98,25 +98,32 @@
                     "default": "1a220001-c2ed-4d11-ad1e-fc06d8a02d37",
                     "readOnly": true
                 },
-                "deviceInCharUuid": {
-                    "title": "FlexiBLE Data-In Characteristic UUID",
+                "deviceRoleCharUuid": {
+                    "title": "FlexiBLE Device Role Characteristic UUID",
+                    "type": "string",
+                    "format": "uuid",
+                    "default": "1a220002-c2ed-4d11-ad1e-fc06d8a02d37",
+                    "readOnly": true
+                },
+                "deviceSpecificationURLCharUUID": {
+                    "title": "FlexiBLE Device Specification URL Characteristic UUID",
+                    "type": "string",
+                    "format": "uuid",
+                    "default": "1a220003-c2ed-4d11-ad1e-fc06d8a02d37",
+                    "readOnly": true
+                },
+                "epochCharUUID": {
+                    "title": "FlexiBLE Epoch Characteristic UUID",
                     "type": "string",
                     "format": "uuid",
                     "default": "1a220004-c2ed-4d11-ad1e-fc06d8a02d37",
                     "readOnly": true
                 },
-                "deviceOutCharUuid": {
-                    "title": "FlexiBLE Data-Out Characteristic UUID",
+                "deviceConfigCharUUID": {
+                    "title": "FlexiBLE Device Config Characteristic UUID",
                     "type": "string",
                     "format": "uuid",
                     "default": "1a220005-c2ed-4d11-ad1e-fc06d8a02d37",
-                    "readOnly": true
-                },
-                "deviceRoleCharUuid": {
-                    "title": "FlexiBLE Device Role Characteristic UUID",
-                    "type": "string",
-                    "format": "uuid",
-                    "default": "1a220006-c2ed-4d11-ad1e-fc06d8a02d37",
                     "readOnly": true
                 }
             },

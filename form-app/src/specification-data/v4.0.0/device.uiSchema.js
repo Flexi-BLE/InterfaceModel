@@ -5,6 +5,7 @@ import { ArrayFieldTemplate } from "../../form/custom-fields/ArrayFieldTemplate"
 import { CollapsableArrayItemTemplate } from "../../form/custom-fields/CollapsableArrayItemTemplate";
 
 import { ExampleDataStreams } from "./examples/DataStream/DataStream";
+import { ExampleConfigValues } from "./examples/ConfigValues/ConfigValues";
 
 
 export const uiSchema = {
@@ -23,6 +24,7 @@ export const uiSchema = {
         'ui:ArrayFieldTemplate': ArrayFieldTemplate,
         'ui:ArrayFieldItemTemplate': Empty,
         'items': {
+            'ui:examples': ExampleConfigValues,
             'ui:FieldTemplate': CollapsableArrayItemTemplate,
             'ui:TitleFieldTemplate': Empty,
             'options': {

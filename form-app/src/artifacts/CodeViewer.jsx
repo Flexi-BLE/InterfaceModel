@@ -1,46 +1,15 @@
 import { useState, useEffect, useContext } from 'react';
 import Editor from '@monaco-editor/react';
-import {SpecContext} from "../SpecContext";
+import {SpecContext} from "../specification-data/SpecContext";
 
-import Mustache from 'mustache';
-import SQLSchemaTemplate from './templates/flexible-db-schema.mustache.sql';
-
-import { serializeSpec } from '../artifacts/TemplateSerializer';
 import { Tab, Tabs, Box, Paper } from "@mui/material";
+import {NotificationContext} from "../notification/NotificationContext";
 
-const files = [
-	{
-		'name': 'spec.json',
-		'code': (spec, setCode) => {
-			setCode(JSON.stringify(spec, null, 2));
-		},
-		'language': 'json'
-	},
-	{
-		'name': 'spec.ir.json',
-		'code': (spec, setCode) => {
-			serializeSpec(spec)
-			setCode(JSON.stringify(spec, null, 2));
-		},
-		'language': 'json'
-	},
-	{
-		'name': 'spec.sql',
-		'code': (spec, setCode) => {
-			fetch(SQLSchemaTemplate)
-				.then((res) => res.text())
-				.then((textContext) => {
-					serializeSpec(spec);
-					setCode(Mustache.render(textContext, spec));
-				})
-
-		},
-		'language': 'sql'
-	}
-]
+import { files } from './GeneratedFiles';
 
 export const CodeViewer = () => {
 	const { spec } = useContext(SpecContext);
+	const { addNotification } = useContext(NotificationContext);
 	const [tabIndex, setTabIndex] = useState(0);
 	const [code, setFileCode] = useState('');
 
@@ -49,6 +18,11 @@ export const CodeViewer = () => {
 		const selectedFile = files[tabIndex];
 		if (selectedFile && typeof selectedFile.code === 'function') {
 			selectedFile.code(spec, setFileCode);
+			addNotification({
+				'message': 'rendered code for ' + selectedFile.name,
+				'severity': 'info',
+				'duration': 1000
+			});
 		}
 	}, [tabIndex, spec]);
 

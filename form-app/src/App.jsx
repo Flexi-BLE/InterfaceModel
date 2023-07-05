@@ -1,109 +1,70 @@
 // App.js
 
+import _ from 'lodash';
+
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { Box } from '@mui/material';
 
 import Sidebar from './navigation/Sidebar';
 import Header from './navigation/Header';
-import Home from './home/Home';
-import { useState, useEffect } from 'react';
+import {useState, useEffect, useContext} from 'react';
 
-import SpecForm from "./form/SpecForm";
-import { SpecContext } from "./SpecContext";
+import { SpecContext } from "./specification-data/SpecContext";
+import { getCurrentSpec, setCurrentSpec } from "./utilities/CookieUtils";
 
-import { uiSchema, schemaRouteDetails, uiSchemaForRoute } from "./specification-data/v4.0.0/device.uiSchema.js";
 import schema from "./specification-data/v4.0.0/device.schema.json";
 
-import RAWJSONEditor from "./form/RawJSONEditor";
-import { CodeViewer } from "./artifacts/CodeViewer";
-
 import { FlexiBLEDefaultVersion, createEmptySpec } from "./utilities/SpecificationUtils";
+import { NotificationProvider } from "./notification/NotificationProvider";
+import { Notification } from "./notification/Notification";
+import {NotificationContext} from "./notification/NotificationContext";
+import {AppRoutes} from "./navigation/AppRoutes";
+
 function App() {
-    const [spec, setSpec] = useState(createEmptySpec(schema));
+    const [spec, setSpec] = useState(null);
+    const [specUrl, setSpecUrl] = useState(null);
     const [version, setVersion] = useState(FlexiBLEDefaultVersion);
+    const { addNotification } = useContext(NotificationContext);
 
     useEffect(() => {
-        console.log('spec changed', spec);
+        const specCookie = getCurrentSpec();
+        if (specCookie) {
+            setSpec(specCookie.spec);
+            addNotification({
+                message: `Loading existing specification ${specCookie.spec.name}`,
+                severity: 'info'
+            })
+        }
+    }, []);
+
+    useEffect(() => {
+        const specCookie = getCurrentSpec();
+
+        if ( spec !== null && !_.isEqual(specCookie.spec, spec) ) {
+            setCurrentSpec(spec);
+        }
+
+
     }, [spec])
 
+    console.log('process.env', process.env);
+
     return (
-        <SpecContext.Provider value={{spec, setSpec, schema}}>
-            <Router>
+        <SpecContext.Provider value={{spec, setSpec, schema, specUrl, setSpecUrl}}>
+            <NotificationProvider>
+                <Router>
                 <Box display="flex" flexDirection="column" height="100vh">
                     <Header spec={spec} setSpec={setSpec} version={version} setVersion={setVersion} />
                     <Box display="flex" flexGrow={1} overflow="hidden" style={{marginTop: 65}}>
                         <Sidebar />
                         <Box flexGrow={1} p={3} overflow="auto">
-                            <Routes>
-                                <Route path="/" element={<Home />} />
-                                <Route
-                                    path="/spec-editor/general"
-                                    element={
-                                        <SpecForm
-                                            spec={spec}
-                                            setSpec={setSpec}
-                                            uiSchema={uiSchemaForRoute('general')}
-                                        />
-                                    }
-                                />
-                                <Route
-                                    path="spec-editor/ble-details"
-                                    element={
-                                        <SpecForm
-                                            spec={spec}
-                                            setSpec={setSpec}
-                                            uiSchema={uiSchemaForRoute('ble-details')}
-                                        />
-                                    }
-                                />
-                                <Route
-                                    path={"spec-editor/config-values"}
-                                    element={
-                                        <SpecForm
-                                            spec={spec}
-                                            setSpec={setSpec}
-                                            uiSchema={uiSchemaForRoute('config-values')}
-                                        />
-                                    }
-                                />
-                                <Route
-                                    path={"spec-editor/commands"}
-                                    element={
-                                        <SpecForm
-                                            spec={spec}
-                                            setSpec={setSpec}
-                                            uiSchema={uiSchemaForRoute('commands')}
-                                        />
-                                    }
-                                />
-                                <Route
-                                    path={"spec-editor/data-streams"}
-                                    element={
-                                        <SpecForm
-                                            spec={spec}
-                                            setSpec={setSpec}
-                                            uiSchema={uiSchemaForRoute('data-streams')}
-                                        />
-                                    }
-                                />
-                                <Route
-                                    path={"spec-editor/raw"}
-                                   element={
-                                        <RAWJSONEditor data={spec} setData={setSpec} />
-                                    }
-                                />
-                                <Route
-                                    path={"/artifacts"}
-                                    element={
-                                        <CodeViewer />
-                                    }
-                                />
-
-                            </Routes>
+                            <AppRoutes spec={spec} setSpec={setSpec} />
                         </Box>
                     </Box>
                 </Box>
+                <Notification />
             </Router>
+            </NotificationProvider>
         </SpecContext.Provider>
     );
 }
