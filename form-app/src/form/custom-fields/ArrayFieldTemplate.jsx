@@ -1,4 +1,4 @@
-import {useContext} from "react";
+import { useState, useContext } from "react";
 import {SpecContext} from "../../specification-data/SpecContext";
 import {parseObject, setProperyWithSchemaId} from "../../utilities/JSONSchemaFormUtils";
 import {Box, Button, Divider, Typography} from "@mui/material";
@@ -6,13 +6,16 @@ import AddIcon from "@mui/icons-material/Add";
 import {ExampleSelect} from "./ExampleSelect";
 import {ExampleDataStreams} from "../../specification-data/v4.0.0/examples/DataStream/DataStream";
 import Grid from "@mui/material/Unstable_Grid2";
+import {FormComponentInfo, FormComponentInfoButton} from "./FormComponentInfo";
 
 export const ArrayFieldTemplate = (props) => {
     const { spec, setSpec } = useContext(SpecContext);
     const { idSchema, schema, uiSchema, registry } = props;
+    const [ isHelpExpanded, setIsHelpExpanded ] = useState(false);
 
     const examples = uiSchema.items['ui:examples'];
-    console.log(`examples ${schema.title}`, examples);
+
+    console.log('ArrayFieldTemplate', schema.title, props);
 
     const handleExampleChange = (selection) => {
         const newSpec = JSON.parse(JSON.stringify(spec));
@@ -41,7 +44,14 @@ export const ArrayFieldTemplate = (props) => {
     return (
         <>
             <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Typography variant="h6">{schema.title}</Typography>
+                <Box container>
+                    <Typography variant="h6" sx={{ mb: 2 }}>{schema.title}</Typography>
+                    <FormComponentInfoButton
+                        title={schema.title}
+                        isExpanded={isHelpExpanded}
+                        setIsExpanded={setIsHelpExpanded}
+                    />
+                </Box>
                 <Box display="flex" gap={2} alignItems="center" sx={{m:2}}>
                     <Button
                         variant="contained"
@@ -59,16 +69,15 @@ export const ArrayFieldTemplate = (props) => {
                     }
                 </Box>
             </Box>
-            <Divider />
-            <Grid>
-                <div>
-                    {props.items.map((element) =>
-                        <Box component="span" display="flex" key={element.key} className={element.className}>
-                            {element.children}
-                        </Box>
-                    )}
-                </div>
-            </Grid>
+            <FormComponentInfo title={schema.title} isExpanded={isHelpExpanded} />
+            <Divider sx={{ mt:2, mb:2 }} />
+            <Box>
+                {props.items.map((element) =>
+                    <Box component="span" display="flex" width={"100%"} key={element.key} className={element.className}>
+                        {element.children}
+                    </Box>
+                )}
+            </Box>
         </>
     )
 }

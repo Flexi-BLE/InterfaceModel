@@ -40,7 +40,7 @@ function App() {
     useEffect(() => {
         const specCookie = getCurrentSpec();
 
-        if ( spec !== null && !_.isEqual(specCookie.spec, spec) ) {
+        if ( spec !== null && specCookie && !_.isEqual(specCookie.spec, spec) ) {
             setCurrentSpec(spec);
         }
 

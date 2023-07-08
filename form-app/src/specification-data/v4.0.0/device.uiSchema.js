@@ -6,6 +6,7 @@ import { CollapsableArrayItemTemplate } from "../../form/custom-fields/Collapsab
 
 import { ExampleDataStreams } from "./examples/DataStream/DataStream";
 import { ExampleConfigValues } from "./examples/ConfigValues/ConfigValues";
+import {Typography} from "@mui/material";
 
 
 export const uiSchema = {
