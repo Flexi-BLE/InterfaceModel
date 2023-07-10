@@ -1,6 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
     "$ref": "#/definitions/FlexiBLEDevice",
+    "version": "0.4.0",
     "definitions": {
         "FlexiBLEDevice": {
             "type": "object",
@@ -91,14 +92,14 @@
                         "enum": ["battery", "heart_rate"]
                     }
                 },
-                "flexibleServiceUuid": {
+                "flexibleServiceUUID": {
                     "title": "FlexiBLE Service UUID",
                     "type": "string",
                     "format": "uuid",
                     "default": "1a220001-c2ed-4d11-ad1e-fc06d8a02d37",
                     "readOnly": true
                 },
-                "deviceRoleCharUuid": {
+                "deviceRoleCharUUID": {
                     "title": "FlexiBLE Device Role Characteristic UUID",
                     "type": "string",
                     "format": "uuid",
@@ -149,9 +150,14 @@
                 }
             },
             "required": [
-                "deviceInCharUuid",
-                "deviceOutCharUuid",
-                "flexibleServiceUuid"
+                "flexibleServiceUUID",
+                "deviceRoleCharUUID",
+                "deviceSpecificationURLCharUUID",
+                "epochCharUUID",
+                "deviceConfigCharUUID",
+                "commandServiceUUID",
+                "commandRxCharUUID",
+                "commandTxCharUUID"
             ],
             "title": "FlexiBLEDeviceBle"
         },
@@ -174,18 +180,30 @@
                     "examples": ["MyCommand"],
                     "default": "Command __POSITION__"
                 },
+                "description": {
+                    "title": "Command Description",
+                    "description": "A user friendly description for the command",
+                    "examples": ["ExampleSensor is a sensor that does something"],
+                    "type": "string"
+                },
+                "CommandType": {
+                    "title": "Command Type",
+                    "description": "Type of command",
+                    "type": "string",
+                    "enum": ["Rx", "Tx", "RxTx"]
+                },
                 "commandCode": {
                     "title": "Command Code",
                     "description": "Code used to identify the command",
                     "type": "integer",
                     "examples": [1,2,3]
                 },
-                "appRequests": {
-                    "title": "App Requests",
-                    "description": "Requests that can be made by the central device",  
+                "dataValues": {
+                    "title": "Command Data Values",
+                    "description": "Data types that can be used in the command",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/CommandRequest"
+                        "$ref": "#/definitions/DataValue"
                     }
                 }
             },
@@ -461,7 +479,7 @@
                 "multiplier": {
                     "title": "Value Multiplier",
                     "type": "number",
-                    "default": 0.0
+                    "default": 1.0
                 },
                 "dataType": {
                     "title": "Data Type",
@@ -613,19 +631,19 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "serviceUuid": {
+                "serviceUUID": {
                     "title": "GATT Service UUID",
                     "type": "string",
                     "format": "uuid",
                     "default": "__UUID__"
                 },
-                "dataCharUuid": {
+                "dataCharUUID": {
                     "title": "Data Characteristic UUID",
                     "type": "string",
                     "format": "uuid",
                     "default": "__UUID+1__"
                 },
-                "configCharUuid": {
+                "configCharUUID": {
                     "title": "Configuration Characteristic UUID",
                     "type": "string",
                     "format": "uuid",
@@ -633,9 +651,9 @@
                 }
             },
             "required": [
-                "configCharUuid",
-                "dataCharUuid",
-                "serviceUuid"
+                "configCharUUID",
+                "dataCharUUID",
+                "serviceUUID"
             ],
             "title": "Data Stream BLE Details"
         }

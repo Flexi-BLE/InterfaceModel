@@ -44,6 +44,33 @@ export const uiSchema = {
         'items': {
             'ui:FieldTemplate': CollapsableArrayItemTemplate,
             'ui:TitleFieldTemplate': Empty,
+            'dataValues': {
+                'ui:ArrayFieldTemplate': ArrayFieldTemplate,
+                'ui:ArrayFieldItemTemplate': Empty,
+                'items': {
+                    'ui:TitleFieldTemplate': Empty,
+                    'ui:FieldTemplate': CollapsableArrayItemTemplate,
+                    'variableType': {
+                        'ui:widget': 'hidden',
+                        'default': 'none'
+                    },
+                    'ui:order': [
+                        'id',
+                        'name',
+                        'description',
+                        'dataType',
+                        'unit',
+                        'length',
+                        'multiplier',
+                        'selectionType',
+                        'range',
+                        'options',
+                        'defaultValue',
+                        'variableType',
+                        'dependsOn'
+                    ]
+                }
+            }
         }
     },
     'dataStreams': {
@@ -82,29 +109,6 @@ export const uiSchema = {
                         'dependsOn'
                     ]
                 },
-            },
-            'dataValues': {
-                'ui:ArrayFieldTemplate': ArrayFieldTemplate,
-                'ui:ArrayFieldItemTemplate': Empty,
-                'items': {
-                    'ui:TitleFieldTemplate': Empty,
-                    'ui:FieldTemplate': CollapsableArrayItemTemplate,
-                    'ui:order': [
-                        'id',
-                        'name',
-                        'description',
-                        'unit',
-                        'length',
-                        'multiplier',
-                        'dataType',
-                        'selectionType',
-                        'range',
-                        'options',
-                        'defaultValue',
-                        'variableType',
-                        'dependsOn'
-                    ]
-                }
             }
         }
     },

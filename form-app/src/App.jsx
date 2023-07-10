@@ -33,7 +33,13 @@ function App() {
             addNotification({
                 message: `Loading existing specification ${specCookie.spec.name}`,
                 severity: 'info'
-            })
+            });
+        } else {
+            setSpec(createEmptySpec(schema));
+            addNotification({
+                message: `Creating new specification`,
+                severity: 'info'
+            });
         }
     }, []);
 

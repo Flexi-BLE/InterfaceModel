@@ -58,22 +58,12 @@
       "length": 8,
       "dataType": "int",
       "variableType": "value"
-    },
-    {
-      "id": "__UUID+4000__",
-      "name": "_offset",
-      "multiplier": 0,
-      "description": "The time since the last reading (in data stream precision units)",
-      "unit": "ms",
-      "length": 4,
-      "dataType": "uint",
-      "variableType": "none"
     }
   ],
   "ble": {
-    "serviceUuid": "__UUID+1__",
-    "dataCharUuid": "__UUID+2__",
-    "configCharUuid": "__UUID+3__"
+    "serviceUUID": "__UUID+1__",
+    "dataCharUUID": "__UUID+2__",
+    "configCharUUID": "__UUID+3__"
   },
   "description": "3-axis accelerometer data "
 }
