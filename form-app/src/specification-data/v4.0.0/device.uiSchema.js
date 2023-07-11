@@ -86,6 +86,30 @@ export const uiSchema = {
             'ble': {
                 'ui:readonly': true
             },
+            'dataValues': {
+                'ui:ArrayFieldTemplate': ArrayFieldTemplate,
+                'ui:ArrayFieldItemTemplate': Empty,
+                'items': {
+                    'ui:TitleFieldTemplate': Empty,
+                    'ui:FieldTemplate': CollapsableArrayItemTemplate,
+                    'uiid': "configValues",
+                    'ui:order': [
+                        'id',
+                        'name',
+                        'description',
+                        'unit',
+                        'length',
+                        'multiplier',
+                        'dataType',
+                        'selectionType',
+                        'range',
+                        'options',
+                        'defaultValue',
+                        'variableType',
+                        'dependsOn'
+                    ]
+                },
+            },
             'configValues': {
                 'ui:ArrayFieldTemplate': ArrayFieldTemplate,
                 'ui:ArrayFieldItemTemplate': Empty,
