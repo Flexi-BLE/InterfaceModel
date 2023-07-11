@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/%7Brepo-name%7D/static/css/main.e6c13ad2.css",
+    "main.js": "/%7Brepo-name%7D/static/js/main.e24c09e1.js",
+    "static/js/364.10d18610.chunk.js": "/%7Brepo-name%7D/static/js/364.10d18610.chunk.js",
+    "static/js/787.2a25c2bc.chunk.js": "/%7Brepo-name%7D/static/js/787.2a25c2bc.chunk.js",
+    "static/js/491.3b36d82a.chunk.js": "/%7Brepo-name%7D/static/js/491.3b36d82a.chunk.js",
+    "static/media/device-db-schema.sql.mustache": "/%7Brepo-name%7D/static/media/device-db-schema.sql.a45d8ef70fd871866fd4.mustache",
+    "static/media/main-db-schema.sql.mustache": "/%7Brepo-name%7D/static/media/main-db-schema.sql.db03d3697fc1bc694cb8.mustache",
+    "index.html": "/%7Brepo-name%7D/index.html",
+    "main.e6c13ad2.css.map": "/%7Brepo-name%7D/static/css/main.e6c13ad2.css.map",
+    "main.e24c09e1.js.map": "/%7Brepo-name%7D/static/js/main.e24c09e1.js.map",
+    "364.10d18610.chunk.js.map": "/%7Brepo-name%7D/static/js/364.10d18610.chunk.js.map",
+    "787.2a25c2bc.chunk.js.map": "/%7Brepo-name%7D/static/js/787.2a25c2bc.chunk.js.map",
+    "491.3b36d82a.chunk.js.map": "/%7Brepo-name%7D/static/js/491.3b36d82a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.e24c09e1.js"
+  ]
+}

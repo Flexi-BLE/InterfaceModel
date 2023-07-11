@@ -1,0 +1,72 @@
+-- MARK: - Device Configurations
+CREATE TABLE IF NOT EXISTS "device_configuration"
+(
+"id" INTEGER PRIMARY KEY AUTOINCREMENT,
+"ts" INTEGER NOT NULL,
+"uploaded" BOOLEAN DEFAULT 0,
+"device_id" INTEGER, -- reference to main database
+{{#configValues}}
+    "{{_name}}" {{_sqliteDataType}},
+{{/configValues}}
+FOREIGN KEY("device_id") REFERENCES "device"("id") ON DELETE CASCADE
+);
+
+-- MARK: - Commands
+-- TODO: implement storage for commands
+
+
+-- MARK: - Data Streams
+CREATE TABLE IF NOT EXISTS "data_stream"
+(
+"id" INTEGER PRIMARY KEY AUTOINCREMENT,
+"name" TEXT NOT NULL UNIQUE ON CONFLICT FAIL,
+"table_name" TEXT,
+"spec" BLOB NOT NULL,
+"created_at" DATETIME,
+"device_id" INTEGER NOT NULL, -- reference to main database
+FOREIGN KEY("device_id") REFERENCES "device"("id") ON DELETE CASCADE
+);
+
+{{#dataStreams}}
+
+CREATE TABLE IF NOT EXISTS "{{_name}}_configuration"
+(
+"id" INTEGER PRIMARY KEY AUTOINCREMENT,
+"ts" INTEGER NOT NULL,
+"uploaded" BOOLEAN DEFAULT 0,
+"device_id" INTEGER NOT NULL, -- reference to main database
+    {{#configValues}}
+"{{_name}}" {{_sqliteDataType}},
+    {{/configValues}}
+FOREIGN KEY("device_id") REFERENCES "device"("id") ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS "{{_name}}"
+(
+"id" INTEGER PRIMARY KEY AUTOINCREMENT,
+"ts" INTEGER NOT NULL,
+"created_at" DATETIME NOT NULL,
+"uploaded" BOOLEAN DEFAULT 0,
+"device_id" INTEGER NOT NULL, -- reference to main database
+    {{#dataValues}}
+"{{_name}}" {{_sqliteDataType}},
+    {{/dataValues}}
+FOREIGN KEY("device_id") REFERENCES "device"("id") ON DELETE CASCADE
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS "idx_{{_name}}_ts"
+ON "{{_name}}"("ts");
+
+{{/dataStreams}}
+
+
+-- MARK: - Throughput
+CREATE TABLE IF NOT EXISTS "throughput"
+(
+"id" INTEGER PRIMARY KEY AUTOINCREMENT,
+"ts" INTEGER NOT NULL,
+"data_stream_id" INTEGER NOT NULL,
+"bytes" INTEGER,
+"device_id" INTEGER NOT NULL, -- reference to main database
+FOREIGN KEY("data_stream_id") REFERENCES "data_stream"("id")
+);
