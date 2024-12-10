@@ -1,0 +1,102 @@
+{
+  "id": "a795a283-d32b-4703-8410-cb989629f62d",
+  "name": "MyDevice",
+  "canGroup": false,
+  "flexibleVersion": "0.4.0",
+  "ble": {
+    "bleServices": [],
+    "flexibleServiceUuid": "1a220001-c2ed-4d11-ad1e-fc06d8a02d37",
+    "deviceInCharUuid": "1a220004-c2ed-4d11-ad1e-fc06d8a02d37",
+    "deviceOutCharUuid": "1a220005-c2ed-4d11-ad1e-fc06d8a02d37",
+    "deviceRoleCharUuid": "1a220006-c2ed-4d11-ad1e-fc06d8a02d37"
+  },
+  "configValues": [
+    {
+      "id": "0756530d-da19-4c85-a7bb-a5c8923e9b50",
+      "name": "Configuration 1",
+      "length": 8
+    }
+  ],
+  "commands": [],
+  "dataStreams": [
+    {
+      "id": "876eeb40-b85f-49bc-8e2d-5ceb852943d6",
+      "name": "Acceleration",
+      "precision": "ms",
+      "configValues": [
+        {
+          "id": "876eeba4-b85f-49bc-8e2d-5ceb852943d6",
+          "name": "Sensor Toggle",
+          "dataType": "bool",
+          "selectionType": "toggle",
+          "defaultValue": "0",
+          "length": 1,
+          "description": "Toggle a sensor on/off"
+        },
+        {
+          "id": "876eec08-b85f-49bc-8e2d-5ceb852943d6",
+          "name": "Desired Frequency",
+          "selectionType": "range",
+          "range": {
+            "start": 0,
+            "end": 1000,
+            "step": 20
+          },
+          "description": "A frequency for sensor data collection",
+          "unit": "Hertz",
+          "length": 8,
+          "dataType": "uint",
+          "defaultValue": "20"
+        }
+      ],
+      "dataValues": [
+        {
+          "id": "876eef28-b85f-49bc-8e2d-5ceb852943d6",
+          "name": "X",
+          "multiplier": 0,
+          "description": "the x-axis of the accelerometer ",
+          "unit": "m/s^2",
+          "length": 5,
+          "dataType": "int",
+          "variableType": "value"
+        },
+        {
+          "id": "876ef310-b85f-49bc-8e2d-5ceb852943d6",
+          "name": "Y",
+          "multiplier": 0,
+          "description": "The Y axis of the accelerometer ",
+          "unit": "m/s^2",
+          "length": 5,
+          "dataType": "int",
+          "variableType": "value"
+        },
+        {
+          "id": "876ef6f8-b85f-49bc-8e2d-5ceb852943d6",
+          "name": "Z",
+          "multiplier": 0,
+          "description": "The Z axis of the accelerometer ",
+          "unit": "m/s^2",
+          "length": 8,
+          "dataType": "int",
+          "variableType": "value"
+        },
+        {
+          "id": "876efae0-b85f-49bc-8e2d-5ceb852943d6",
+          "name": "_offset",
+          "multiplier": 0,
+          "description": "The time since the last reading (in data stream precision units)",
+          "unit": "ms",
+          "length": 4,
+          "dataType": "uint",
+          "variableType": "none"
+        }
+      ],
+      "ble": {
+        "serviceUuid": "876eeb41-b85f-49bc-8e2d-5ceb852943d6",
+        "dataCharUuid": "876eeb42-b85f-49bc-8e2d-5ceb852943d6",
+        "configCharUuid": "876eeb43-b85f-49bc-8e2d-5ceb852943d6"
+      },
+      "description": "3-axis accelerometer data "
+    }
+  ]
+}
