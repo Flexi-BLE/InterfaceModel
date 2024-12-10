@@ -186,29 +186,28 @@
                     "examples": ["ExampleSensor is a sensor that does something"],
                     "type": "string"
                 },
-                "CommandType": {
-                    "title": "Command Type",
-                    "description": "Type of command",
-                    "type": "string",
-                    "enum": ["Rx", "Tx", "RxTx"]
-                },
                 "commandCode": {
                     "title": "Command Code",
                     "description": "Code used to identify the command",
                     "type": "integer",
                     "examples": [1,2,3]
                 },
-                "dataValues": {
-                    "title": "Command Data Values",
-                    "description": "Data types that can be used in the command",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/DataValue"
-                    }
+                "requestDataType": {
+                    "title": "Request Data Type",
+                    "description": "The data to be passed in a request",
+                    "type": "string",
+                    "enum": ["none", "int", "uint", "float", "bool", "utf8"],
+                    "default": "none"
+                },
+                "responseDataType": {
+                    "title": "Response Data Type",
+                    "description": "The expected return value",
+                    "type": "string",
+                    "enum": ["none", "int", "uint", "float", "bool", "utf8"],
+                    "default": "none"
                 }
             },
             "required": [
-                "appRequests",
                 "commandCode"
             ],
             "title": "Command"
@@ -322,7 +321,7 @@
                 "dataType": {
                     "title": "Data Type",
                     "type": "string",
-                    "enum": ["int", "uint", "float", "bool", "ascii", "utf-8"]
+                    "enum": ["int", "uint", "float", "bool", "utf8"]
                 },
                 "selectionType": {
                     "title": "Selection Type",
@@ -361,7 +360,7 @@
                         {
                             "properties": {
                                 "dataType": {
-                                    "enum": ["ascii", "utf-8"]
+                                    "enum": ["utf8"]
                                 },
                                 "selectionType": {
                                     "enum": ["freeform" ,"single", "multi"],
@@ -484,7 +483,7 @@
                 "dataType": {
                     "title": "Data Type",
                     "type": "string",
-                    "enum": ["int", "uint", "float", "ascii", "utf-8"]
+                    "enum": ["int", "uint", "float", "utf8"]
                 },
                 "variableType": {
                     "title": "Variable Type",
